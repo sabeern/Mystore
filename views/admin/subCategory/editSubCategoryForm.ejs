@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | Edit Subcategory</title>
+<!-- CSS Files Included-->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+ <!-- Navbar -->
+    <%- include('../../partials/admin/adminNavbar') %>
+    <section class="main_content dashboard_part large_header_bg">
+        <%- include('../../partials/admin/adminHeader') %>
+        <!-- Body Content Part -->
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="dashboard_header mb_30">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="dashboard_header_title">
+                                        <h3>Update Sub-Category</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="dashboard_breadcam text-end">
+                                        <p><a href="index-2.html">Dashboard</a> <i class="fas fa-caret-right"></i>Edit
+                                            Sub-Category</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="white_box mb_30">
+                            <div class="row justify-content-center">
+                                <div id="checkResult"></div>
+                                <div class="col-lg-6">
+                                    <div class="modal-content cs_modal">
+                                        <div class="modal-body">
+                                            <form method="post" action="/admin/subCategory/updateSubCategory/<%= result._id %>?_method=PUT">
+                                                <div class="row">
+                                                <div class="mb-12">
+                                                    <label class="form-label" for="inputState">Sub-Category Name</label>
+                                                    <input type="text" id="subCategoryText" name="subCategoryName" onkeyup="subCategoryExistCheck()" value="<%= result.subCategoryName %>" class="form-control"  placeholder="Please Enter" required>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label class="form-label" for="inputState">Select Category</label>
+                                                    
+                                                    <select id="selectCategory" name="categoryId" class="form-control" onchange="subCategoryExistCheck()">
+                                                        <option value="">Choose...</option>
+                                                        <% if(category.length > 0) {   
+                                                            category.forEach((val)=> { %>
+                                                                <option value="<%= val._id %>" <% if(val._id.equals(result.categoryId)){ %> selected <% } %>><%= val.categoryName %></option>
+                                                            <% })} %>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                                <button type="submit" id="submitButton" class="btn_1 full_width text-center"> Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer part -->
+        <%- include('../../partials/admin/adminFooter') %>
+    </section>
+    <!-- Checking Already Exist -->
+    <script src="../../../admin/javascript/existCheck.js"></script>
+    <!-- JS Files Included  -->
+    <%- include('../../partials/admin/adminJs') %>
+</body>
+</html>

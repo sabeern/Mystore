@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><%=title%></title>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap"
+        rel="stylesheet">
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../user/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/style.css" type="text/css">
+</head>
+
+<body>
+    <%- include('../partials/user/userNavbar') %>
+    <!-- Hero Section Begin -->
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-lg-12">
+                    
+                    <!--Carousel Wrapper-->
+                    <div id="home-banner" class="carousel slide carousel-fade" data-ride="carousel">
+                        <!--Indicators-->
+                        <ol class="carousel-indicators">
+                            <li data-target="#home-banner" data-slide-to="0" class="active"></li>
+                            <li data-target="#home-banner" data-slide-to="1"></li>
+                            <li data-target="#home-banner" data-slide-to="2"></li>
+                        </ol>
+                        <!--/.Indicators-->
+                        <!--Slides-->
+                        <div class="carousel-inner" role="listbox">
+                            <% if(bannerDetails.length > 0) {
+                                count = 1
+                                bannerDetails.forEach((eachBanner) => { %>
+                            <div class="carousel-item <% if(count==3){ %>active <%}%>">
+                                <div class="hero__item set-bg" data-setbg="../uploads/banner/<%=eachBanner.bannerImage%>">
+                                    <div class="hero__text">
+                                        <span><%= eachBanner.bannerText1 %></span>
+                                        <h2><%= eachBanner.bannerMainText %></h2>
+                                        <p><%= eachBanner.bannerText2 %></p>
+                                        <a href="/category/<%=eachBanner.targetLink%>" class="primary-btn">SHOP NOW</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% count++
+                        } ) } %>
+                        </div>
+                        <!--/.Slides-->
+                        <!--Controls-->
+                        <a class="carousel-control-prev" href="#home-banner" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                        <a class="carousel-control-next" href="#home-banner" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                        <!--/.Controls-->
+                    </div>
+                    <!--/.Carousel Wrapper-->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Categories Section Begin -->
+    <section class="categories">
+        <div class="container">
+            <div class="row">
+                <div class="categories__slider owl-carousel">
+                    <% allSubCategories.forEach((eachSubcategory) => { %> 
+                    <div class="col-lg-3">
+                        <div class="categories__item set-bg" data-setbg="../uploads/subCategory/<%=eachSubcategory.subCategoryImage %>">
+                            <h5><a href="/category/<%=eachSubcategory._id%>"><%= eachSubcategory.subCategoryName %></a></h5>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+    </section>
+    <!-- Categories Section End -->
+
+    <!-- Featured Section Begin -->
+    
+    <section class="featured spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Featured Product</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row featured__filter">
+                <% moreStockProduct.forEach((moreStock)=>{ %>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="../uploads/<%=moreStock.productImage%>">
+                            <ul class="featured__item__pic__hover">
+                                <li onclick="addToWishlist('<%=moreStock._id%>')"><span><i class="fa fa-heart"></i></span></li>
+                                <li title="Add to cart" onclick="addToCart('<%=moreStock._id%>')"><span><i class="fa fa-shopping-cart"></i></span></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="/product/<%=moreStock._id%>"><%= moreStock.productName %></a></h6>
+                            <h5><span style="font-size:13px;font-weight:300;"><del>MRP.<%= (moreStock.productMrp).toFixed(2) %>  </del></span>&nbsp;&nbsp;₹<%= (moreStock.productPrice).toFixed(2) %></h5>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+                
+            </div>
+        </div>
+    </section>
+    <!-- Featured Section End -->
+
+    <!-- Banner Begin -->
+    <div class="banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="banner__pic" style="background-color:#CFEFEA;">
+                        <img src="../user/img/banner/banner-1.jpg" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6">
+                    <div class="banner__pic">
+                        <img src="../user/img/banner/banner-2.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Banner End -->
+
+    <!-- Latest Product Section Begin -->
+    <section class="latest-product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="latest-product__text">
+                        <h4>Latest Products</h4>
+                        <div class="latest-product__slider owl-carousel">
+                            <div class="latest-prdouct__slider__item">
+                                <% 
+                                count = 0
+                                latestProduct.forEach((latest)=>{ %>
+                                <a href="/product/<%=latest._id%>" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="../uploads/<%=latest.productImage%>" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6><%= latest.productName %></h6>
+                                        <span>₹<%= (latest.productPrice).toFixed(2) %></span>
+                                    </div>
+                                </a>
+                                <% count++
+                                if(count == 3) { %>
+                                </div>
+                                <div class="latest-prdouct__slider__item">
+                                <% }}) %>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="latest-product__text">
+                        <h4>Top Rated Products</h4>
+                        <div class="latest-product__slider owl-carousel">
+                            <div class="latest-prdouct__slider__item">
+                                <% 
+                                count = 0
+                                latestProduct.forEach((latest)=>{ %>
+                                <a href="/product/<%=latest._id%>" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="../uploads/<%=latest.productImage%>" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6><%= latest.productName %></h6>
+                                        <span>₹<%= (latest.productPrice).toFixed(2) %></span>
+                                    </div>
+                                </a>
+                                <% count++
+                                if(count == 3) { %>
+                                </div>
+                                <div class="latest-prdouct__slider__item">
+                                <% }}) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="latest-product__text">
+                        <h4>Review Products</h4>
+                        <div class="latest-product__slider owl-carousel">
+                            <div class="latest-prdouct__slider__item">
+                                <% 
+                                count = 0
+                                latestProduct.forEach((latest)=>{ %>
+                                <a href="/product/<%=latest._id%>" class="latest-product__item">
+                                    <div class="latest-product__item__pic">
+                                        <img src="../uploads/<%=latest.productImage%>" alt="">
+                                    </div>
+                                    <div class="latest-product__item__text">
+                                        <h6><%= latest.productName %></h6>
+                                        <span>₹<%= (latest.productPrice).toFixed(2) %></span>
+                                    </div>
+                                </a>
+                                <% count++
+                                if(count == 3) { %>
+                                </div>
+                                <div class="latest-prdouct__slider__item">
+                                <% }}) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Latest Product Section End -->
+
+    <!-- Blog Section Begin -->
+    <section class="from-blog spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title from-blog__title">
+                        <h2>From The Blog</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="../user/img/blog/blog-1.jpg" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> Oct 20,2022</li>
+                            </ul>
+                            <h5><a href="product/63457ec62646f2739772bc96">Cooking tips make cooking simple</a></h5>
+                            <p>Get comfortable! Wear comfy clothes and an apron when you work in the kitchen and you won’t have to worry about getting dirty.
+                                And also always use good quality ingredients for cooking.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="../user/img/blog/blog-2.jpg" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> Oct 15,2022</li>
+                            </ul>
+                            <h5><a href="/category/63457c862646f2739772bc76">Importents fresh vegetables</a></h5>
+                            <p>
+                                A diet rich in vegetables, reduce the risk of heart disease, prevent some types of cancer, lower risk of eye and digestive problems, 
+                                and have a positive effect upon blood sugar.Always use fresh vegetables.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6">
+                    <div class="blog__item">
+                        <div class="blog__item__pic">
+                            <img src="../user/img/blog/blog-3.jpg" alt="">
+                        </div>
+                        <div class="blog__item__text">
+                            <ul>
+                                <li><i class="fa fa-calendar-o"></i> Oct 1,2022</li>
+                            </ul>
+                            <h5><a href="/category/63457c2d2646f2739772bc72">Health benefits of fruits</a></h5>
+                            <p>
+                                Fruits are a good source of vitamins and minerals, recognized for their role in preventing vitamin C and vitamin A deficiencies.
+                                But always try to use good quality and fresh fruits.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Blog Section End -->
+<%- include('../partials/user/userFooter') %>
+    <script src="../user/javascripts/loginSignup.js"></script>
+    <script src="../user/javascripts/homeMenuLoad.js"></script>
+    <script src="../user/javascripts/addToCart.js"></script>
+    <script src="../user/javascripts/addToWishlist.js"></script>
+    <!-- Js Plugins -->
+    <script src="../user/js/jquery-3.3.1.min.js"></script>
+    <script src="../user/js/bootstrap.min.js"></script>
+    <script src="../user/js/jquery.nice-select.min.js"></script>
+    <script src="../user/js/jquery-ui.min.js"></script>
+    <script src="../user/js/jquery.slicknav.js"></script>
+    <script src="../user/js/mixitup.min.js"></script>
+    <script src="../user/js/owl.carousel.min.js"></script>
+    <script src="../user/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | Customer List</title>
+    <!-- Css File Included -->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar -->
+    <%- include('../../partials/admin/adminNavbar') %>
+    <section class="main_content dashboard_part large_header_bg">
+        <%- include('../../partials/admin/adminHeader') %>
+        <!-- Body Content  -->
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="white_card card_height_100 mb_30">
+                            <div class="white_card_body">
+                                <div class="QA_section">
+                                    <div class="white_box_tittle list_header">
+                                        <h3>User List</h3>
+                                        <div class="box_right d-flex lms_block">
+                                            <div class="serach_field_2">
+                                                <div class="search_inner">
+                                                    <div class="search_field">
+                                                        <input type="text" id="searchContent" name="searchContent" onkeyup="searchCategory()"
+                                                            placeholder="Search content here...">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="QA_table mb_30">
+                                        <!-- table-responsive -->
+                                        <div id="categoryTable">
+                                            <table class="table lms_table_active">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Sl.No</th>
+                                                        <th scope="col">Fullname</th>
+                                                        <th scope="col">Email</th>
+                                                        <th scope="col">Mobile Number</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">View</th>
+                                                        <th scope="col">Change</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(users.length > 0) {
+                                                        count = 1 
+                                                        users.forEach((eachUser) => { %>
+                                                        <tr>
+                                                            <th scope="row"> 
+                                                                <span class="question_content"><%=count++%></span>
+                                                            </th>
+                                                            <td>
+                                                                <%=eachUser.userName%>
+                                                            </td>
+                                                            <td>
+                                                                <%=eachUser.userEmail%>
+                                                            </td>
+                                                            <td>
+                                                                <%=eachUser.userMobile%>
+                                                            </td>
+                                                            <td>
+                                                                <%if(eachUser.userStatus == 'active'){%>
+                                                                    <span class="badge rounded-pill bg-success"><%=eachUser.userStatus%></span>
+                                                                    <% } else { %>
+                                                                        <span class="badge rounded-pill bg-danger"><%=eachUser.userStatus%></span>
+                                                                        <% } %>
+                                                            </td>
+                                                            <td>
+                                                                    <button type="button" onclick="showDetails('<%=eachUser._id%>')" data-toggle="modal" data-target="#userViewModal" class="badge rounded-pill bg-primary">View Details</button>
+                                                            </td>
+                                                            <td>
+                                                                    <span class="badge rounded-pill bg-danger" onclick="blockConfirm('<%=eachUser._id%>','<%=eachUser.userStatus%>','<%=eachUser.userName%>')" data-toggle="modal" data-target="#blockConfirmModal" style="cursor:pointer;">Block/Unblock</span>
+                                                            </td>
+                                                        </tr>
+                                                     <% }) }   %>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- View Details Modal -->
+        <div class="modal fade" id="userViewModal" tabindex="-1" role="dialog"
+            aria-labelledby="viewModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewModalTitle">User Details</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="userDetails">
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Block confirm modal-->
+        <div class="modal fade" id="blockConfirmModal" tabindex="-1" role="dialog"
+            aria-labelledby="blockConfirmModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="blockConfirmModalTitle">Please Confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure want to <span class="text-primary" id="blockDetails"></span>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="/admin/user/blockUser" method="post">
+                            <input type="hidden" id="userId" name="userId">
+                            <input type="hidden" id="userStatus" name="userStatus">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="confirmButton">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer part -->
+        <%- include('../../partials/admin/adminFooter') %>
+    </section>
+    <!-- Included Js Files -->
+    <%- include('../../partials/admin/adminJs') %>
+    <script src="../../../admin/javascript/metisMenu.js"></script>
+    <script>
+        function showDetails(userId) {
+            let details = `<table class="table table-bordered"><tbody>`;            
+            fetch('/admin/user/viewDetails', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userId })
+            }).then(res => res.json()).then(data => {
+                const user = data.user;
+                details += `<tr><th>Fullname</th><td>${user.userName}</td></tr>
+                            <tr><th>User Email</th><td>${user.userEmail}</td></tr>
+                            <tr><th>User Mobile</th><td>${user.userMobile}</td></tr>
+                            <tr><th>User Status</th><td>${user.userStatus}</td></tr>
+                            <tr><th>User Type</th><td>${user.userType}</td></tr>`;
+                            if(user.userAddress.length > 0) {
+                                for(i=0;i<user.userAddress.length;i++) {
+                                    if(i==0) {
+                                        details += `<tr><th>User Addresses</th>
+                                        <td>${user.userAddress[i].fullName} - ${user.userAddress[i].mobileNumber}<br/>
+                                            ${user.userAddress[i].locality}, ${user.userAddress[i].address}, ${user.userAddress[i].pincode}<br/>
+                                            ${user.userAddress[i].district}, ${user.userAddress[i].state}</td></tr>`;
+                                    }else {
+                                        details += `<tr><th></th>
+                                            <td>${user.userAddress[i].fullName} - ${user.userAddress[i].mobileNumber}<br/>
+                                            ${user.userAddress[i].locality}, ${user.userAddress[i].address}, ${user.userAddress[i].pincode}<br/>
+                                            ${user.userAddress[i].district}, ${user.userAddress[i].state}</td></tr>`
+                                    }  
+                                }
+                            }
+                details += `</tbody></table>`;
+                document.getElementById('userDetails').innerHTML = details;
+             })
+        }
+    function blockConfirm(userId,userStatus,userName) {
+        document.getElementById('userId').value = userId;
+        document.getElementById('userStatus').value = userStatus;
+        let blockStatus;
+        if(userStatus == 'active') {
+            blockStatus = 'block';
+        }else {
+            blockStatus = 'unblock';
+        }
+        document.getElementById('blockDetails').innerHTML = blockStatus+' '+userName;
+    }
+    </script>
+</body>
+</html>

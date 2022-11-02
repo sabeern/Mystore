@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Sales</title>
+<!--CSS File Included-->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar  -->
+    <%- include('../../partials/admin/adminNavbar') %>
+       <section class="main_content dashboard_part large_header_bg">
+            <div class="container-fluid g-0">
+                <div class="row">
+                    <div class="col-lg-12 p-0">
+                        <div class="header_iner d-flex justify-content-between align-items-center">
+                            <div class="sidebar_icon d-lg-none">
+                                <i class="ti-menu"></i>
+                            </div>
+                            <div class="serach_field-area d-flex align-items-center">
+                                <div class="search_inner">
+                                    <form action="#">
+                                        <div class="search_field">
+                                            <input type="text" placeholder="Search here...">
+                                        </div>
+                                        <button type="submit"> 
+                                            <img src="../../../admin/images/icon/icon_search.svg" alt="">
+                                        </button>
+                                    </form>
+                                </div>
+                                <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
+                            </div>
+                            <div class="header_right d-flex justify-content-between align-items-center">
+                                <div class="header_notification_warp d-flex align-items-center">
+                                    <li>
+                                        <a class="bell_notification_clicker nav-link-notify" href="#"> <img
+                                                src="../../../admin/images/icon/bell.svg" alt="">
+                                        </a>
+                                        <div class="Menu_NOtification_Wrap">
+                                            <div class="notification_Header">
+                                                <h4>Notifications</h4>
+                                            </div>
+                                            <div class="Notification_body">
+                                            </div>
+                                            <div class="nofity_footer">
+                                                <div class="submit_button text-center pt_20">
+                                                    <a href="#" class="btn_1">See More</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <a class="CHATBOX_open nav-link-notify" href="#"> <img
+                                                src="../../admin/images/icon/msg.svg" alt=""> </a>
+                                    </li>
+                                </div>
+                                <div class="profile_info">
+                                    <img src="../../../admin/images/client_img.png" alt="#">
+                                    <div class="profile_info_iner">
+                                        <div class="profile_author_name">
+                                            <h5>Admin</h5>
+                                        </div>
+                                        <div class="profile_info_details">
+                                            <a href="#">My Profile </a>
+                                            <a href="/admin/logout">Log Out </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Body Content  -->
+            <div class="main_content_iner ">
+                <div class="container-fluid p-0">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="dashboard_header mb_30">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="dashboard_header_title">
+                                            <h3>New Product</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dashboard_breadcam text-end">
+                                            <p><a href="index-2.html">Dashboard</a> <i class="fas fa-caret-right"></i>Add
+                                                Product</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="white_card card_height_100 mb_30">
+                                <div class="white_card_body">
+                                    <div class="card-body">
+                                        <form action="/admin/product/updateProduct/<%=editProductDetails._id %>?_method=PUT" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">            
+                                            <div class="alert alert-danger" role="alert" id="requiredErr">
+                                                Plaese Fill the Required Fields
+                                              </div>
+                                              <% if(errMsg) { %>
+                                                <div class="alert alert-danger" role="alert" id="requiredErr">
+                                                    <%= errMsg %>
+                                                  </div>
+                                              <% } %>
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label" for="productName">Product Name <span class="text-danger" id="nameErr"></span></span></label>
+                                                    <input type="text" class="form-control" value="<%= editProductDetails.productName %>" name="productName"
+                                                        id="productName" placeholder="Product Name" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label" for="productDescription">Product
+                                                        Description <span class="text-danger" id="descriptionErr"></span></label>
+                                                    <input type="text" class="form-control" name="productDescription"
+                                                        id="productDescription" value="<%= editProductDetails.productDescription %>" placeholder="Product Details">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="category">Category <span class="text-danger" id="categoryErr"></span></label>
+                                                    <select id="categoryId" name="productCategoryId" class="form-control">
+                                                        <option value="">Choose...</option>
+                                                        <% category.forEach(eachCategory=> { %>
+                                                            <option value="<%= eachCategory._id %>" <% if(editProductDetails.productCategoryId.equals(eachCategory._id)){%> selected <%}%>>
+                                                                <%= eachCategory.categoryName %>
+                                                            </option>
+                                                            <% }) %>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="subCategory">Sub-Category <span class="text-danger" id="subCategoryErr"></span></label>
+                                                    <div id="subcategory">
+                                                        <select id="subCategoryId" name="productSubCategoryId"
+                                                            class="form-control">
+                                                            <option value="">Choose...</option>
+                                                            <% subCategory.forEach(eachSubCategory=> { %>
+                                                                <option value="<%= eachSubCategory._id %>" <% if(editProductDetails.productSubCategoryId.equals(eachSubCategory._id)){%> selected <%}%>>
+                                                                    <%= eachSubCategory.subCategoryName %>
+                                                                </option>
+                                                                <% }) %>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-3">
+                                                    <label class="form-label" for="brandId">Brand <span class="text-danger" id="brandErr"></span></label>
+                                                    <select id="productBrandId" name="productBrandId" class="form-control">
+                                                        <option selected="">Choose...</option>
+                                                        <% brand.forEach(eachBrand=> { %>
+                                                            <option value="<%= eachBrand._id %>" <% if(editProductDetails.productBrandId.equals(eachBrand._id)){%> selected <%}%>>
+                                                                <%= eachBrand.brandName %>
+                                                            </option>
+                                                            <% }) %>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label" for="productStock">Stcock <span class="text-danger" id="stockErr"></span></label>
+                                                    <input type="text" class="form-control" name="productStock"
+                                                        id="productStock" value="<%= editProductDetails.productStock %>" placeholder="Stock">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label" for="productPrice">Selling
+                                                        Price <span class="text-danger" id="priceErr"></span></label>
+                                                    <input type="text" class="form-control" name="productPrice"
+                                                        id="productPrice" value="<%= editProductDetails.productPrice %>" placeholder="Product Price">
+                                                </div>
+                                                <div class=" col-md-3">
+                                                    <label class="form-label" for="productMrp">Product Mrp <span class="text-danger" id="mrpErr"></span></label>
+                                                    <input type="text" class="form-control" id="productMrp"
+                                                        name="productMrp" placeholder="Mrp" value="<%= editProductDetails.productMrp %>">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="form-label" for="productMrp">Product Image <span class="text-danger" id="imageErr"></span></label>
+                                                <img src="../../uploads/<%= editProductDetails.productImage %>" alt="" style="width:100px;height:auto;">
+                                                <div class=" mb-0">
+                                                    <input type="file" name="productImage" class=""
+                                                        id="productImage">
+                                                </div>
+                                            </div>
+                                            <button type="submit" id="submitbtn" class="btn btn-primary">Update Product</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer part -->
+            <div class="footer_part">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="footer_iner text-center">
+                                <p>2022 © MyStore - Designed by <a href="#"> <i class="ti-heart"></i> </a><a href="#">
+                                        Sabeer Neyyan</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- validation and sub-category load-->
+        <script src="../../../admin/javascript/adminProduct.js"></script>
+        <!-- footer  -->
+        <%- include('../../partials/admin/adminJs') %>
+</body>
+</html>

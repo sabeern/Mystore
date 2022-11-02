@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | Sales Report</title>
+    <!-- Css File Included -->
+    <%- include('../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar -->
+    <%- include('../partials/admin/adminNavbar') %>
+    <section class="main_content dashboard_part large_header_bg">
+        <%- include('../partials/admin/adminHeader') %>
+        <!-- Body Content  -->
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="white_card card_height_100 mb_30">
+                            <div class="white_card_body">
+                                <div class="QA_section">
+                                    <div class="white_box_tittle list_header">
+                                        <h3>Generate Sales Report</h3>
+                                    </div>
+                                    <div class="QA_table mb_30">
+                                        <div class="row">
+                                            <div class="col-md-3 mb-2 common_date_picker ">
+                                                <input class="datepicker-here digits" type="text" id="startDate" name="startDate" data-language="en" data-multiple-dates-separator=", " data-position="bottom left" placeholder="Starting Date">
+                                              </div>
+                                              <div class="col-md-3 mb-2 common_date_picker ">
+                                                <input class="datepicker-here  digits" type="text" id="endDate" name="endDate" data-language="en" data-multiple-dates-separator=", " data-position="bottom left" placeholder="Ending Date">
+                                              </div>
+                                              <div class="col-md-4 mb-2">
+                                                 <span class="text-danger" id="categoryErr"></span></label>
+                                                <select id="reportType" name="reportType" class="form-control">
+                                                    <option value="">Choose report type...</option>
+                                                    <option value="month">Monthly</option>
+                                                    <option value="customer">Customer Wise</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 mb-2">
+                                                <button type="button" id="submitbtn" class="btn btn-primary" onclick="showReport()">Show</button>
+                                            </div>
+                                        </div>
+                                        <!-- table-responsive -->
+                                        <div id="reportTable">
+                                            <table class="table lms_table_active">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Sl.No</th>
+                                                        <th scope="col">Category Name</th>
+                                                        <th scope="col">Edit</th>
+                                                        <th scope="col">Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                   
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer part -->
+        <%- include('../partials/admin/adminFooter') %>
+    </section>
+    <!-- Included Js Files -->
+    <%- include('../partials/admin/adminJs') %>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="../../admin/javascript/metisMenu.js"></script>
+    <script src="../../admin/javascript/salesReportAndExport.js"></script>
+</body>
+</html>

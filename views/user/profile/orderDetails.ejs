@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyStore | Order Details</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../../../user/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../../user/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../../user/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../../../user/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../../../user/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../../../user/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../../../user/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../../../user/css/style.css" type="text/css">
+</head>
+
+<body>
+    <%- include('../../partials/user/userNavbar') %>
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="../../../user/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Order Details</h2>
+                        <div class="breadcrumb__option">
+                            <% if(orderList.length > 0 ) { %>
+                                <a href="/account/myorder/orderDetails/<%=orderList[0]._id%>">Order Id</a>
+                            <span>#<%=orderList[0].orderId%> </span>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p><b>Delivery Address - </b>
+                        <% if(orderList.length > 0 ) { %>
+                            <span><%=orderList[0].address[0].fullName%> - <%=orderList[0].address[0].mobileNumber%>,
+                                <%=orderList[0].address[0].locality%>, <%=orderList[0].address[0].address%>, <%=orderList[0].address[0].pincode%>, <%=orderList[0].address[0].district%>,
+                                <%=orderList[0].address[0].state%></span>
+                            <% } %>
+                    </p>
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Products</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% 
+                                grandTotal = 0;
+                                if(orderList.length > 0) { 
+                                    orderList.forEach((orderedItems)=>{ 
+                                    %>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="../../../uploads/<%= orderedItems.product[0].productImage %>" alt="" style="width:100px;height:auto">
+                                        <h5><%= orderedItems.product[0].productName %></h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        <%= (orderedItems.product[0].productPrice).toFixed(2) %>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        <%= orderedItems.itemQuantity %>
+                                    </td>
+                                    <td class="shoping__cart__total" id="eachTotal<%=orderedItems.item%>">
+                                         <%= (orderedItems.product[0].productPrice * orderedItems.itemQuantity).toFixed(2)  %>
+                                    </td>
+                                </tr>
+                                <% }) }else { %>
+                                    <tr>
+                                        <td colspan="4"><h3>There is no order</h3></td>
+                                    </tr>
+                                    <% } %>
+                                <input type="hidden" id="grandTotalTextbox" value="<%=grandTotal%>">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="/" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Cart Total</h5>
+                        <ul>
+                            <% subTotal = (orderList[0].totalAmount)-(orderList[0].deliveryCharge) %>
+                            <li>Subtotal <span id="subTotal">₹<%= (subTotal).toFixed(2) %></span></li>
+                            <li style="text-decoration:none;font-weight:200;">DeliveryCharge <span>₹<%= (orderList[0].deliveryCharge).toFixed(2) %></span></li>
+                            <li>Total <span id="total">₹<%= (orderList[0].totalAmount).toFixed(2) %></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shoping Cart Section End -->
+   <%- include('../../partials/user/userFooter') %>
+    <script src="../../../user/javascripts/loginSignup.js"></script>
+    <script src="../../../user/javascripts/homeMenuLoad.js"></script>
+    <script src="../../../user/javascripts/cartControl.js"></script>
+    <!-- Js Plugins -->
+    <script src="../../../user/js/jquery-3.3.1.min.js"></script>
+    <script src="../../../user/js/bootstrap.min.js"></script>
+    <script src="../../../user/js/jquery.nice-select.min.js"></script>
+    <script src="../../../user/js/jquery-ui.min.js"></script>
+    <script src="../../../user/js/jquery.slicknav.js"></script>
+    <script src="../../../user/js/mixitup.min.js"></script>
+    <script src="../../../user/js/owl.carousel.min.js"></script>
+    <script src="../../../user/js/main.js"></script>
+
+
+</body>
+
+
+<!-- Mirrored from technext.github.io/ogani/shoping-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:40 GMT -->
+</html>

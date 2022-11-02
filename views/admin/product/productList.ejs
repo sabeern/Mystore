@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | Product List</title>
+    <!--CSS Files Included-->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+<!--Navbar-->
+<%- include('../../partials/admin/adminNavbar') %>
+    <section class="main_content dashboard_part large_header_bg">
+        <%- include('../../partials/admin/adminHeader') %>
+        <!-- Body Content Part  -->
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="white_card card_height_100 mb_30">
+                            <div class="white_card_body">
+                                <div class="QA_section">
+                                    <div class="white_box_tittle list_header">
+                                        <h3>Products List</h3>
+                                        <div class="box_right d-flex lms_block">
+                                            <div class="serach_field_2">
+                                                <div class="search_inner">
+                                                    <div class="search_field">
+                                                        <input type="text" id="searchContent" name="searchContent"
+                                                            onkeyup="searchProduct()" placeholder="Search content here...">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </div>
+                                            </div>
+                                            <div class="add_button ms-2">
+                                                <a href="/admin/product" data-bs-toggle="modal"
+                                                    data-bs-target="#addcategory" class="btn_1">Add New</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="QA_table mb_30">
+                                        <div id="productTable">
+                                            <table class="table lms_table_active">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Sl.No</th>
+                                                        <th scope="col">Product Name</th>
+                                                        <th scope="col">Product Category</th>
+                                                        <th scope="col">Product Sub-Category</th>
+                                                        <th scope="col">Stock</th>
+                                                        <th scope="col">Price</th>
+                                                        <th scope="col">Edit</th>
+                                                        <th scope="col">Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% count=1; allProducts.forEach((product)=> { %>
+                                                        <tr>
+                                                            <th scope="row"> 
+                                                                <span class="question_content"><%= count++ %></span>
+                                                            </th>
+                                                            <td>
+                                                                <%= product.productName %>
+                                                            </td>
+                                                            <td><% if(product.category[0]){ %><%= product.category[0].categoryName %><% } %></td>
+                                                            <td><% if(product.subCategory[0]){ %><%= product.subCategory[0].subCategoryName %><% } %></td>
+                                                            <td><%= product.productStock %></td>
+                                                            <td><%= product.productPrice %></td>
+                                                            <td>
+                                                                <form method="post" action="/admin/product/editProduct">
+                                                                    <input type="hidden" id="productEdit" name="productEdit" value="<%= product._id %>">
+                                                                    <button type="submit" class="badge rounded-pill bg-primary">Edit</button>
+                                                                </form>
+                                                            </td>
+                                                            <td>
+                                                                <a href="#" onclick="changeId('<%= product._id %>')" data-toggle="modal"
+                                                                    data-target="#productDeleteModal" class="question_content">
+                                                                    <span class="badge rounded-pill bg-danger">Delete</span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <% }) %>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="productDeleteModal" tabindex="-1" role="dialog"
+            aria-labelledby="productDeleteModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="productDeleteModalTitle">Please Confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure want to delete
+                    </div>
+                    <div class="modal-footer">
+
+                        <input type="hidden" id="productId" name="productId">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" id="newConfirmButton">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer part -->
+        <%- include('../../partials/admin/adminFooter') %>
+    </section>
+    <!-- JS Files Included -->
+    <%- include('../../partials/admin/adminJs') %>
+    <script src="../../../admin/javascript/metisMenu.js"></script>
+    <script src="../../../admin/javascript/adminProduct.js"></script>
+    <script>
+        const element = document.getElementById("newConfirmButton");
+        element.addEventListener("click", function () {
+        let productDelete = document.getElementById('productId').value;
+            fetch('/admin/product/deleteProduct', {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productDelete })
+                }).then(res => res.json()).then(data => {
+                window.location = '/admin/product/productList';
+                })
+            });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+
+<!-- Mirrored from technext.github.io/ogani/shop-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:27 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ogani | Template</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../user/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../user/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    <span id="itemAddMessage"></span>
+    
+
+    <!-- Header Section Begin -->
+    <header class="header pb-3">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><a href="index.html"><img src="../user/img/logo.png" alt=""></a></li>
+                                <li>Free Shipping for all Order of $99</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social header__cart">
+
+                                <ul>
+                                    <li><a href="/gp/wishlist"><i class="fa fa-heart"></i><i id="wishListCount">
+                                        <% if(wishlistCount){%><span><%=wishlistCount[0].count%></span><% } %>
+                                    </i></a></li>
+                                    <li><a href="/gp/cart"><i class="fa fa-shopping-bag"></i> 
+                                        <i id="cartCount"><% if(cartCount){%><span><%=cartCount[0].count%></span><% } %></i></a></li>
+                                </ul>
+                                <div class="header__cart__price">item: <span>$150.00</span></div>
+
+                            </div>
+                                <% if(userFullname) { %>
+                                    <div class="header__top__right__language">
+                                        <i class="fa fa-user"></i>&nbsp;
+                                        <div> <%= userFullname %></div>
+                                        <span class="arrow_carrot-down"></span>
+                                        <ul>
+                                            <li><a href="/account/profile"><i class="fa fa-user"></i>&nbsp; My Profile</a></li>
+                                            <li><a href="/gp/cart"><i class="fa fa-shopping-bag"></i> &nbsp;Cart</a></li>
+                                            <li><a href="/gp/wishlist"><i class="fa fa-heart"></i> &nbsp;Whishlist</a></li>
+                                            <li><a href="/ap/logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</a></li>
+                                        </ul>
+                                    </div>
+                                <% }else { %>
+                                    <div class="header__top__right__auth">
+                                        <a href="#" data-toggle="modal" data-target="#loginModal"><i class="fa fa-user"></i>Login
+                                        </a>
+                                    </div> 
+                               <%  } %>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+    <!-- Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" style="overflow-y:auto;" role="dialog"
+        aria-labelledby="loginModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="loginModalTitle">Login</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Get access to your Orders and Wishlist</p>
+                    <div class="contact-form spad">
+                        <div class="container">
+                            <form action="/ap/login" method="post" id="loginForm">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span id="loginErr" class="text-danger"></span>
+                                        <input type="email" name="loginEmail" id="loginEmail" placeholder="Your email"
+                                            required>
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="password" name="loginPassword" id="loginPassword" placeholder="Password"
+                                            required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <p><a href="" data-toggle="modal" data-target="#signupModal" data-dismiss="modal">You are New Here?
+                            Create an Account</a></p>
+                    <p class="text-right"><a href="">Forgot Password?</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="button" onclick="loginCheck()">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" style="overflow-y:auto;" role="dialog"
+        aria-labelledby="signupModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="signupModalTitle">Create New Account</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+                        onclick="refreshModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Signup with email to get started</p>
+                    <div class="contact-form spad">
+                        <div class="container">
+                            <form action="/ap/signup" method="post" id="signupForm">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <span id="emailErr" class="text-danger"></span>
+                                        <input type="email" name="userEmail" id="userEmail" placeholder="Your email">
+                                    </div>
+                                    <div id="signupBody" style="width:100%"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <p class="text-right"><a href="" data-toggle="modal" data-target="#loginModal" data-dismiss="modal"
+                            onclick="refreshModal()">Existing User? Login</a></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                        onclick="refreshModal()">Cancel</button>
+                    <div id="submitButton">
+                        <input type="button" class="btn btn-primary" id="confirmButton" value="Next"
+                            onclick="generateOtp()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section End -->
+    
+    <section class="hero hero-normal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span id="selectedCategory">All departments</span>
+                        </div>
+                        <div id="innerCategory">
+                        <ul>
+                            <% allCategories.forEach((category)=> { %>
+                                <li onclick="loadSubcategory('<%=category._id%>')"><span>
+                                        <%= category.categoryName %>
+                                </span></li>
+                                <% }) %>
+                        </ul>
+                    </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="#">
+
+                                <input type="text" placeholder="What do yo u need?">
+                                <button type="submit" class="site-btn">SEARCH</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>+91 960 502 7896</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- Product Section Begin -->
+    <seection class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-5">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4>Home -> Secure Shopping</h4>
+                            <ul>
+                                <li><a href="/shop/aboutus">About MyStore</a></li>
+                                <li><a href="/shop/secureShopping"><span class="text-primary">Secure Shopping</span></a></li>
+                                <li><a href="/shop/termsAndCondition">Terms and Condition</a></li>
+                                <li><a href="/shop/deliveryInformation">Delivery Information</a></li>
+                                <li><a href="/shop/privacyPolicy">Privacy Policy</a></li>
+                                <li><a href="/shop/contactUs">Contact Us</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-7">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h3>Secure Shopping</h3><br/>
+                            <p>MyStore allows you to walk away from the drudgery of grocery shopping and welcome an easy relaxed way of browsing and shopping for groceries.
+                                 Discover new products and shop for all your food and grocery needs from the comfort of your home or office. No more getting stuck in traffic jams,
+                                  paying for parking , standing in long queues and carrying heavy bags – get everything you need, when you need, right at your doorstep.
+                                   Food shopping online is now easy as every product on your shopping list, is now available online at MyStore, The best online grocery store!</p>
+                        </div>
+                        <div class="col-md-4">
+                            <img src="../../user/img/secure.png" alt="100% secure">
+                        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+    <!-- Footer Section End -->
+    <script src="../user/javascripts/loginSignup.js"></script>
+    <script src="../user/javascripts/homeMenuLoad.js"></script>
+    <script src="../user/javascripts/addToCart.js"></script>
+    <script src="../user/javascripts/addToWishlist.js"></script>
+    <!-- Js Plugins -->
+    <script src="../user/js/jquery-3.3.1.min.js"></script>
+    <script src="../user/js/bootstrap.min.js"></script>
+    <script src="../user/js/jquery.nice-select.min.js"></script>
+    <script src="../user/js/jquery-ui.min.js"></script>
+    <script src="../user/js/jquery.slicknav.js"></script>
+    <script src="../user/js/mixitup.min.js"></script>
+    <script src="../user/js/owl.carousel.min.js"></script>
+    <script src="../user/js/main.js"></script>
+
+
+
+</body>
+
+
+<!-- Mirrored from technext.github.io/ogani/shop-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:35 GMT -->
+</html>

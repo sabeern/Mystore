@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyStore | My Orders</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../../user/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/style.css" type="text/css">
+</head>
+
+<body>
+    <%- include('../../partials/user/userNavbar') %>
+    <!-- Product Section Begin -->
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-5">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4><a href="/account/myorder">My Orders <i class="fa fa-angle-double-right"></i></a></h4>
+                            <hr/>
+                            <h4>Account Settings</h4>
+                            <ul>
+                                <li><a href="/account/profile">Profile Information</a></li>
+                                <li><a href="/account/address">Manage Addresses</a></li>
+                                <li><a href="/account/password">Change Password</a></li>
+                            </ul><br/><hr/>
+                            <h6><a class="text-dark" href="/ap/logout">Logout <i class="fa fa-sign-out"></i></a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-7" style="overflow-x:scroll;">
+                    <div class="row">
+                        <div class="col-12">
+                            <% if(userOrders.length > 0) { %>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Sl.No</th>
+                                        <th>Order Id</th>
+                                        <th>Ordered Date</th>
+                                        <th>Amount</th>
+                                        <th>Order Status</th>
+                                        <th>View Details</th>
+                                        <th>Cancel Order</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% count = 1
+                                    userOrders.forEach((eachOrder) => { %>
+                                        <tr>
+                                            <td><%= count++ %></td>
+                                            <td>
+                                                <a href="/account/myorder/orderDetails/<%=eachOrder._id%>">#<%=eachOrder.orderId%></a>
+                                            </td>
+                                            <td><% orderDate = eachOrder.orderDate
+                                                orderDate = orderDate.getDate()+'/'+orderDate.getMonth()+'/'+orderDate.getFullYear() %>
+                                                <%=orderDate%>
+                                            </td>
+                                            <td><%=eachOrder.totalAmount%></td>
+                                            <td>
+                                                <% if(eachOrder.orderStatus == 'pending') { %>
+                                                        <span class="text-danger"><%=eachOrder.orderStatus%></span>
+                                                    <% } else { %>
+                                                            <%=eachOrder.orderStatus%>
+                                                        <% } %>
+                                            </td>
+                                            <td><a href="/account/myorder/orderDetails/<%=eachOrder._id%>"><span class="badge rounded-pill text-light bg-primary">View</span></a></td>
+                                            <td><% if(eachOrder.orderStatus == 'approved'){ %><span class="badge rounded-pill text-light bg-danger" 
+                                                onclick="cancelOrder('<%=eachOrder._id%>')" data-toggle="modal" data-target="#orderCancelModal" style="cursor:pointer;">Cancel Order</span>
+                                                <% } else if(eachOrder.orderStatus == 'pending'){%>
+                                                    <span class="badge rounded-pill text-light bg-success" onclick="payAgain('<%=eachOrder._id%>')" style="cursor:pointer;">Pay Again</span>
+                                                <% } else {%>
+                                                    <span class="text-success">Order processed</span>
+                                                    <% } %>
+                                                </td>
+                                        </tr>
+                                    <% }) %>
+                                </tbody>
+                            </table>
+                            <% } else { %>
+                                    <h2>You don't have any order yet.</h2>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+    <!-- Delete Confirmation Modal -->
+<div class="modal fade" id="orderCancelModal" tabindex="-1" role="dialog"
+aria-labelledby="orderCancelModalTitle" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="orderCancelModalTitle">Please Confirm</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            Are you sure want to cancel order?
+        </div>
+        <div class="modal-footer">
+            <form action="/account/myorder/updateOrder" method="post">
+            <input type="hidden" id="orderId" name="orderId">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <button class="btn btn-primary" type="submit">Confirm</button>
+        </form>
+        </div>
+    </div>
+</div>
+</div>
+    <%- include('../../partials/user/userFooter') %>
+    <script src="../../user/javascripts/payAgain.js"></script>
+    <script src="../../user/javascripts/checkoutPayment.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+    <script src="../../user/javascripts/homeMenuLoad.js"></script>
+    <script src="../../user/javascripts/cartControl.js"></script>
+    <!-- Js Plugins -->
+    <script src="../../user/js/jquery-3.3.1.min.js"></script>
+    <script src="../../user/js/bootstrap.min.js"></script>
+    <script src="../../user/js/jquery.nice-select.min.js"></script>
+    <script src="../../user/js/jquery-ui.min.js"></script>
+    <script src="../../user/js/jquery.slicknav.js"></script>
+    <script src="../../user/js/mixitup.min.js"></script>
+    <script src="../../user/js/owl.carousel.min.js"></script>
+    <script src="../../user/js/main.js"></script>
+
+
+
+</body>
+
+
+<!-- Mirrored from technext.github.io/ogani/shop-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:35 GMT -->
+</html>

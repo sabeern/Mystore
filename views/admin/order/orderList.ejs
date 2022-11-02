@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | Order List</title>
+    <!-- Css File Included -->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar -->
+    <%- include('../../partials/admin/adminNavbar') %>
+    <section class="main_content dashboard_part large_header_bg">
+        <%- include('../../partials/admin/adminHeader') %>
+        <!-- Body Content  -->
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="white_card card_height_100 mb_30">
+                            <div class="white_card_body">
+                                <div class="QA_section">
+                                    <div class="white_box_tittle list_header">
+                                        <h3>Order List</h3>
+                                        <div class="box_right d-flex lms_block">
+                                            <div class="serach_field_2" style="width: 300px;">
+                                                <div class="search_inner">
+                                                    <div class="search_field">
+                                                        <input type="text" id="searchContent" name="searchContent" onkeyup=""
+                                                            placeholder="Search content here...">
+                                                    </div>
+                                                    <button type="submit"> <i class="ti-search"></i> </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="QA_table mb_30">
+                                        <!-- table-responsive -->
+                                        <div id="categoryTable">
+                                            <table class="table lms_table_active">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Sl.No</th>
+                                                        <th scope="col">Order Id</th>
+                                                        <th scope="col">Ordered User</th>
+                                                        <th scope="col">Total Amount</th>
+                                                        <th scope="col">Order Status</th>
+                                                        <th scope="col">Delivery Date</th>
+                                                        <th scope="col">Change Status</th>
+                                                        <th scope="col">View</th>
+                                                        <th scope="col">Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(orders.length > 0) {
+                                                        count = 1
+                                                        orders.forEach((eachOrder) => { %>
+                                                        <tr>
+                                                            <th scope="row"> 
+                                                                <span class="question_content"><%= count++ %></span>
+                                                            </th>
+                                                            <td>
+                                                                #<%=eachOrder.orderId%>
+                                                            </td>
+                                                            <td>
+                                                                <%=eachOrder.user[0].userName%>
+                                                            </td>
+                                                            <td>
+                                                                <%=eachOrder.totalAmount%>
+                                                            </td>
+                                                            <td>
+                                                                <%=eachOrder.orderStatus%>
+                                                            </td>
+                                                            <td>
+                                                                <% deliveryDate = eachOrder.deliveryDate
+                                                                deliveryDate = deliveryDate.getFullYear()+'/'+deliveryDate.getMonth()+'/'+deliveryDate.getDate() 
+                                                                dateNow = new Date();
+                                                                currentDate = dateNow.getFullYear()+'/'+dateNow.getMonth()+'/'+dateNow.getDate()
+                                                                if(deliveryDate == currentDate & eachOrder.orderStatus == 'approved') {%>
+                                                                <span class="text-success"><%=deliveryDate%></span>
+                                                                    <% } else if(deliveryDate < currentDate & eachOrder.orderStatus == 'approved') { %>
+                                                                        <span class="text-danger"><%=deliveryDate%></span>
+                                                                        <% } else { %>
+                                                                            <%=deliveryDate%>
+                                                                            <% } %>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge rounded-pill pointer bg-primary" onclick="changeStatus('<%=eachOrder._id%>','<%=eachOrder.orderStatus%>')" 
+                                                                    data-toggle="modal" data-target="#statusModal">Change Status</span>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/admin/order/viewOrder/<%=eachOrder._id%>">
+                                                                    <span class="badge rounded-pill pointer bg-primary">View</span>
+                                                                </a>
+                                                            </td>
+                                                            <td>
+                                                                <span class="badge rounded-pill pointer bg-danger" onclick="deleteOrder('<%=eachOrder._id%>')" 
+                                                                    data-toggle="modal" data-target="#deleteModal">Delete</span>
+                                                            </td>
+                                                        </tr>
+                                                <% })   } %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Status Change Modal -->
+        <div class="modal fade" id="statusModal" tabindex="-1" role="dialog"
+            aria-labelledby="statusModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="statusModalTitle">Please Select Status</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <select class="form-select form-select-lg mb-3" id="orderStatus" name="orderStatus" form="statusForm">
+                            <option selected>Select status</option>
+                          </select>
+                    </div>
+                    <div class="modal-footer">
+                        <form action="/admin/order/updateStatus" method="post" id="statusForm">
+                        <input type="hidden" id="orderId" name="orderId">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit" id="confirmButton">Update</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
+            aria-labelledby="deleteModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalTitle">Please Confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure want to delete?
+                    </div>
+                    <div class="modal-footer">
+                        <form action="/admin/order/deleteOrder" method="post">
+                        <input type="hidden" id="deleteOrderId" name="orderId">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" type="submit">Confirm</button>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer part -->
+        <%- include('../../partials/admin/adminFooter') %>
+    </section>
+    <script>
+        function changeStatus(orderId,status) {
+            document.getElementById('orderId').value = orderId;
+            const statusField = document.getElementById('orderStatus');
+            const updateButton = document.getElementById('confirmButton');
+            if(status == 'approved') {
+                statusField.innerHTML = `<option value="shipped">Shipped</option>
+                                        <option value="delivered">Delivered</option>
+                                        <option value="canceled">Canceled</option>`;
+                    updateButton.disabled = false;
+            }else if(status == 'shipped') {
+                statusField.innerHTML = `<option value="delivered">Delivered</option>
+                                        <option value="canceled">Canceled</option>`;
+                    updateButton.disabled = false;
+            }else {
+                updateButton.disabled = true;
+            }
+        }
+    function deleteOrder(orderId) {
+        document.getElementById('deleteOrderId').value = orderId;
+    }
+    </script>
+    <!-- Included Js Files -->
+    <%- include('../../partials/admin/adminJs') %>
+    <script src="../../../admin/javascript/metisMenu.js"></script>
+    <script src="../../../admin/javascript/categoryList.js"></script>
+</body>
+</html>

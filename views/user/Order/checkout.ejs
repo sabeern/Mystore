@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyStore | Checkout</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../../user/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/style.css" type="text/css">
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+    <header class="header pb-3">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><a href="/"><img src="../user/img/logo.png" alt=""></a></li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="../../user/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Checkout</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/">Home</a>
+                            <span>Checkout</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h6><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click here</a> to enter your code
+                    </h6>
+                </div>
+            </div>
+            <div class="checkout__form">
+                <h4>Billing Details</h4>
+                <form action="/gp/checkout/placeorder" method="post">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8">
+                            <div class="row mt-2">
+                                <div class="col-12">
+                                    <% 
+                                    addressLength = profileDetails.userAddress.length
+                                    if(addressLength > 0) { %>
+                                        <table class="table table-bordered">
+                                        <% for(i=0;i < addressLength;i++) {
+                                        %>
+                                        <tr>
+                                            <td>
+                                                <input type="radio" name="selectedAddress" id="selectedAddress" onclick="showAddress(1)" value="<%=profileDetails.userAddress[i]._id%>" <% if(i==0){ %> checked <%}%> > 
+                                            </td>
+                                            <td>
+                                                <%=profileDetails.userAddress[i].fullName%>&nbsp; - &nbsp;<%=profileDetails.userAddress[i].mobileNumber%><br/>
+                                                <%=profileDetails.userAddress[i].address%> , <%=profileDetails.userAddress[i].locality%> , 
+                                                <%=profileDetails.userAddress[i].pincode%> , <%=profileDetails.userAddress[i].district%> , <%=profileDetails.userAddress[i].state%>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                            </table>
+                               <% } %>
+                                </div>
+                                <div class="col-lg-12 mb-2 mt-2">
+                                    <p>Prefered Delivery Date<span class="text-danger" id="deliveryDateErr"></span></p>
+                                    <input type="radio" name="deliveryDate" id="deliveryDate" value="today"> Today
+                                    <% currentDate = new Date() 
+                                    deliveryDate = (currentDate.getDate()+1)+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear();
+                                    %>
+                                    <input type="radio" name="deliveryDate" class="ml-3" id="deliveryDate" value="tomorrow"> <%=deliveryDate%>  
+                                </div>
+                                <div class="col-12">
+                                    <div class="checkout__input">
+                                        <p>Order notes</p>
+                                        <input type="text" id="orderNote" name="orderNote"
+                                            placeholder="Notes about your order, e.g. special notes for delivery.">
+                                    </div>
+                                    <button type="button" class="btn btn-outline-secondary" onclick="showAddress(0)">+ Add new address</button>
+                                </div>
+                            </div>
+                            <div id="newAddress" style="display:none;">
+                            <div class="row">
+                                <div class="col-lg-12 mb-2 mt-2">
+                                    <input type="radio" name="selectedAddress" id="selectedAddressNew" value="new"> Add new address 
+                                    <span class="text-primary pl-4" onclick="showAddress(1)" style="cursor:pointer;">Cancel</span>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Full Name<span id="nameErr">*</span></p>
+                                        <input type="text" id="fullName" name="fullName">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Mobile Number<span id="mobileErr">*</span></p>
+                                        <input type="text" id="mobileNumber" name="mobileNumber">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Pincode<span id="pinErr">*</span></p>
+                                        <input type="text" id="pincode" name="pincode">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Locality<span id="localityerr">*</span></p>
+                                        <input type="text" id="locality" name="locality">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Address<span id="addressErr">*</span></p>
+                                <input type="text" placeholder="Street Address" id="address" name="address" class="checkout__input__add">
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>District<span id="districtErr">*</span></p>
+                                        <input type="text" id="district" name="district">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>State<span id="stateErr">*</span></p>
+                                        <input type="text" id="state" name="state">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <% if(orderList.length > 0) {
+                            totalAmount = 0;
+                            orderList.forEach((items)=> {
+                                totalAmount += (items.itemQuantity*items.product[0].productPrice);
+                            })
+                        } %>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4>Price Details</h4>
+                                 <ul>
+                                    <li>Price(<%= orderList.length %> item) <span>₹<%= (totalAmount).toFixed(2)%></span></li>
+                                    <li>Delivery Charge <span>₹<%if(totalAmount <= 99){ deliveryCharge = 50 %>50.00<%}else { deliveryCharge = 0 %> 
+                                    <span class="text-success">Free</span><%}%></span></li>
+                                    <li>Discount <span>$00.00</span></li>
+                                    <input type="hidden" id="cartId" name="cartId" value="<%=orderList[0]._id%>">
+                                    <input type="hidden" id="deliveryCharge" name="deliveryCharge" value="<%=deliveryCharge%>">
+                                </ul>
+                                <div class="checkout__order__subtotal">Total Payable <span>₹<%= (totalAmount+deliveryCharge).toFixed(2) %></span></div>
+                                <button type="button" class="site-btn" data-toggle="modal" data-target="#paymentType">PLACE ORDER</button>
+                            </div>
+                        </div>
+                    </div>
+                <input type="hidden" name="totalAmount" id="totalAmount" value="<%=(totalAmount+deliveryCharge)%>">
+                    <!-- Modal -->
+    <div class="modal fade" id="paymentType" tabindex="-1" style="overflow-y:auto;" role="dialog"
+    aria-labelledby="paymentTypeTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="paymentTypeTitle">Payment Options</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Please select your payment option.<span class="text-danger" id="paymentErr"></span></p>
+                <p id="errMsg"></p>
+                <div class="contact-form spad">
+                    <div class="container">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input type="radio" name="paymentMethod" id="paymentMethod" value="COD"><label for="cod">&nbsp; Cash on Delivery</label><br/>
+                                    <input type="radio" name="paymentMethod" id="paymentMethod" value="ONLINE"><label for="cod">&nbsp; Online Payment</label>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="button" onclick="validateCheckout()">Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--modal end-->
+            </div>
+        </div>
+    </section>
+    <!-- Checkout Section End -->
+   <%- include('../../partials/user/userFooter') %>
+    <!-- Footer Section End -->
+    <script src="../../user/javascripts/checkoutPayment.js"></script>
+    <script src="../../user/javascripts/checkoutValidation.js"></script>
+    <!-- Js Plugins -->
+    <script src="../../user/js/jquery-3.3.1.min.js"></script>
+    <script src="../../user/js/bootstrap.min.js"></script>
+    <script src="../../user/js/jquery.nice-select.min.js"></script>
+    <script src="../../user/js/jquery-ui.min.js"></script>
+    <script src="../../user/js/jquery.slicknav.js"></script>
+    <script src="../../user/js/mixitup.min.js"></script>
+    <script src="../../user/js/owl.carousel.min.js"></script>
+    <script src="../../user/js/main.js"></script>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    
+</body>
+
+
+<!-- Mirrored from technext.github.io/ogani/checkout.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:40 GMT -->
+</html>

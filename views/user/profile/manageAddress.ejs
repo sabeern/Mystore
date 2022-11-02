@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyStore | Manage Address</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../../user/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/style.css" type="text/css">
+</head>
+
+<body>
+    <%- include('../../partials/user/userNavbar') %>
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-5">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4><a class="text-dark" href="/account/myorder">My Orders <i class="fa fa-angle-double-right"></i></a></h4>
+                            <hr/>
+                            <h4>Account Settings</h4>
+                            <ul>
+                                <li><a href="/account/profile">Profile Information</a></li>
+                                <li><a class="text-primary" href="/account/address">Manage Addresses</a></li>
+                                <li><a href="/account/password">Change Password</a></li>
+                            </ul><br/><hr/>
+                            <h6><a class="text-dark" href="/ap/logout">Logout <i class="fa fa-sign-out"></i></a></h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-7">
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="button" onclick="showAddressForm(1)" class="btn btn-lg btn-outline-secondary btn-block mb-3">+ ADD A NEW ADDRESS</button>
+                            <div id="addAddress" style="display:none">
+                            <form action="/account/address/addAddress" method="post" onsubmit="return validateAddress()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="fullName">Fullname <span class="text-danger" id="nameErr">*</span></label>
+                                        <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Enter fullname">
+                                      </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="mobile">Mobile Number <span class="text-danger" id="mobileErr">*</span></label>
+                                        <input type="text" class="form-control" id="mobile" name="mobile" placeholder="Enter mobile number">
+                                      </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="pincode">Pincode <span class="text-danger" id="pinErr">*</span></label>
+                                        <input type="text" class="form-control" id="pincode" name="pincode" placeholder="Enter pincode">
+                                      </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="locality">Locality <span class="text-danger" id="localityErr">*</span></label>
+                                        <input type="text" class="form-control" id="locality" name="locality" placeholder="Enter locality">
+                                      </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="address">Address <span class="text-danger" id="addressErr">*</span></label>
+                                        <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+                                      </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="district">District <span class="text-danger" id="districtErr">*</span></label>
+                                        <input type="text" class="form-control" id="district" name="district" placeholder="Enter district">
+                                      </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="state">State <span class="text-danger" id="stateErr">*</span></label>
+                                        <input type="text" class="form-control" id="state" name="state" placeholder="Enter state">
+                                      </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-lg" style="width:50%">Add</button> <span class="text-primary" style="cursor:pointer" onclick="showAddressForm(0)">&nbsp; Cancel</span>
+                                </div>
+                            </div>
+                        </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <% 
+                            addressLength = profileDetails.userAddress.length
+                            if(addressLength > 0) { 
+                                for(i=0;i < addressLength;i++) {
+                                %>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td>
+                                        <%=profileDetails.userAddress[i].fullName%>&nbsp; - &nbsp;<%=profileDetails.userAddress[i].mobileNumber%> &nbsp;
+                                        <a href="/account/address/remove/<%=profileDetails.userAddress[i]._id%>">remove</a><br/>
+                                        <%=profileDetails.userAddress[i].address%> , <%=profileDetails.userAddress[i].locality%> , 
+                                        <%=profileDetails.userAddress[i].pincode%> , <%=profileDetails.userAddress[i].district%> , <%=profileDetails.userAddress[i].state%>
+                                    </td>
+                                </tr>
+                            </table>
+                            <% }} %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+    <%- include('../../partials/user/userFooter') %>
+    <script>
+        const formElemnt = document.getElementById('addAddress');
+        function showAddressForm(status) {
+            if(status == 1) {
+                formElemnt.style.display = 'block';
+            }else {
+                formElemnt.style.display = 'none';
+            }
+        }
+    function validateAddress() {
+        let errFlag = 0;
+        let fullName = document.getElementById('fullName').value;
+            fullName = fullName.trim();
+        if(fullName.length < 1) {
+            errFlag = 1;
+            document.getElementById('nameErr').innerHTML = '*required';
+        }else {
+            document.getElementById('nameErr').innerHTML = '';
+        }
+        let mobile = document.getElementById('mobile').value;
+            mobile = mobile.trim();
+        if(mobile.length < 1) {
+            errFlag = 1;
+            document.getElementById('mobileErr').innerHTML = '*required';
+        }else if(!mobile.match(/^\d{10}$/)){
+            document.getElementById('mobileErr').innerHTML = '* valied number required';
+        }else {
+            document.getElementById('mobileErr').innerHTML = '';
+        }
+        let pincode = document.getElementById('pincode').value;
+            pincode = pincode.trim();
+        if(pincode.length < 1) {
+            errFlag = 1;
+            document.getElementById('pinErr').innerHTML = '*required';
+        }else if(!pincode.match(/[0-9]/g)) {
+            document.getElementById('pinErr').innerHTML = '*required valid pincode';
+        }else {
+            document.getElementById('pinErr').innerHTML = '';
+        }
+        let locality = document.getElementById('locality').value;
+            locality = locality.trim();
+        if(locality.length < 1) {
+            errFlag = 1;
+            document.getElementById('localityErr').innerHTML = '*required';
+        }else {
+            document.getElementById('localityErr').innerHTML = '';
+        }
+        let address = document.getElementById('address').value;
+            address = address.trim();
+        if(address.length < 1) {
+            errFlag = 1;
+            document.getElementById('addressErr').innerHTML = '*required';
+        }else {
+            document.getElementById('addressErr').innerHTML = '';
+        }
+        let district = document.getElementById('district').value;
+            district = district.trim();
+        if(district.length < 1) {
+            errFlag = 1;
+            document.getElementById('districtErr').innerHTML = '*required';
+        }else {
+            document.getElementById('districtErr').innerHTML = '';
+        }
+        let state = document.getElementById('state').value;
+            state = state.trim();
+        if(state.length < 1) {
+            errFlag = 1;
+            document.getElementById('stateErr').innerHTML = '*required';
+        }else {
+            document.getElementById('stateErr').innerHTML = '';
+        }
+        if(errFlag == 1) {
+            return false;
+        }
+    }
+    </script>
+    <script src="../../user/javascripts/homeMenuLoad.js"></script>
+    <script src="../../user/javascripts/cartControl.js"></script>
+    <!-- Js Plugins -->
+    <script src="../../user/js/jquery-3.3.1.min.js"></script>
+    <script src="../../user/js/bootstrap.min.js"></script>
+    <script src="../../user/js/jquery.nice-select.min.js"></script>
+    <script src="../../user/js/jquery-ui.min.js"></script>
+    <script src="../../user/js/jquery.slicknav.js"></script>
+    <script src="../../user/js/mixitup.min.js"></script>
+    <script src="../../user/js/owl.carousel.min.js"></script>
+    <script src="../../user/js/main.js"></script>
+
+
+
+</body>
+
+
+<!-- Mirrored from technext.github.io/ogani/shop-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:35 GMT -->
+</html>

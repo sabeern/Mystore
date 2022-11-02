@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="eng">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | Dashboard</title>
+    <%- include('../partials/admin/adminCss') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar  -->
+    <%- include('../partials/admin/adminNavbar') %>
+    <section class="main_content dashboard_part large_header_bg">
+        <%- include('../partials/admin/adminHeader') %>
+        <!-- Body Content Part  -->
+        <div class="main_content_iner overly_inner ">
+            <div class="container-fluid p-0 ">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page_title_box d-flex align-items-center justify-content-between">
+                            <div class="page_title_left">
+                                <h3 class="f_s_30 f_w_700 text_white">Dashboard</h3>
+                                <ol class="breadcrumb page_bradcam mb-0">
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);">MyStore </a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
+                                </ol>
+                            </div>
+                            <a href="/admin/order/orderList" class="white_btn3">Pending Orders</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row ">
+                <div class="col-lg-8 card_height_100">
+                    <div class="white_card mb_20">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">Sales of <%=new Date().getFullYear()%></h3>
+                                </div>
+                                <div class="float-lg-right float-none sales_renew_btns justify-content-end">
+                                    <ul class="nav">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" href="#">Monthly</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Last Week</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body" style="height: 286px;">
+                            <canvas  id="bar" ></canvas>
+                        </div>
+                    </div>
+                <div class="white_card mb_20">
+                        <div class="white_card_body renew_report_card d-flex align-items-center justify-content-between flex-wrap">
+                            <div class="renew_report_left">
+                                <h4 class="f_s_19 f_w_600 color_theme2 mb-0" >Download your earnings report</h4>
+                                <p class="color_gray2 f_s_12 f_w_600" >You can generate sales report between dates.</p>
+                            </div>
+                            <div class="create_report_btn">
+                                <a href="/admin/salesReport" class="btn_1 mt-1 mb-1">GenerateReport Report</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 card_height_100 mb_20">
+                    <div class="white_card">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">Order Status Report <%= new Date().getFullYear()%></h3>
+                                </div>
+                                <div class="header_more_tool">
+                                    <div class="dropdown">
+                                        <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                          <i class="ti-more-alt"></i>
+                                        </span>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body p-0">
+                            <div class="card_container">
+                                <div id="platform_type_dates_donut" style="height:280px" ></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sales_unit_footer d-flex justify-content-between">
+                        <div class="single_sales">
+                            <p>This Month Sale</p>
+                            <h3>₹<%if(lastMonthSale.length > 0){%><%=lastMonthSale[0].monthlySale%><%}%></h3>
+                            <p class="d-flex align-items-center" > </p>
+                        </div>
+                        <div class="single_sales disable_sales">
+                            <p>Average Sale Per Day</p>
+                            <h3>
+                                <%if(lastMonthSale.length > 0){
+                                    numberofDays = new Date().getDate(); %>
+                                    ₹<%=((lastMonthSale[0].monthlySale)/numberofDays).toFixed(2)%><%}%>
+                            </h3>
+                            <p class="d-flex align-items-center" > </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="white_card card_height_100 mb_30 ">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0"><b>(<%=pendingOrders.length%>)</b> Unprocessed Orders</h3>
+                                </div>
+                                <div class="header_more_tool">
+                                    <div class="dropdown">
+                                        <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                          <i class="ti-more-alt"></i>
+                                        </span>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body QA_section">
+                            <div class="QA_table ">
+                                <!-- table-responsive -->
+                                <table class="table lms_table_active2 p-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Order Id</th>
+                                            <th scope="col">Ordered Date</th>
+                                            <th scope="col">Delivery Date</th>
+                                            <th scope="col">Total Amount</th>
+                                            <th scope="col">Payment Type</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(pendingOrders.length > 0) { 
+                                            count = 1
+                                            pendingOrders.forEach((order) => { 
+                                                if(count++ <=6) { %>
+                                        <tr>
+                                            <td>
+                                                <span class="f_s_14 f_w_400 color_text_1" >#<%=order.orderId%></span>
+                                            </td>
+                                            <td class="f_s_14 f_w_400 color_text_3">
+                                                <% orderDate = order.orderDate
+                                                orderDate = orderDate.getDate()+'/'+orderDate.getMonth()+'/'+orderDate.getFullYear() %>
+                                                <%=orderDate%>
+                                            </td>
+                                            <td class="f_s_14 f_w_400 color_text_2">
+                                                <% deliveryDate = order.deliveryDate
+                                                deliveryDate = deliveryDate.getDate()+'/'+deliveryDate.getMonth()+'/'+deliveryDate.getFullYear() %>
+                                                <%=deliveryDate%>
+                                            </td>
+                                            <td class="f_s_14 f_w_400 color_text_4"><%=order.totalAmount%></td>
+                                            <td class="f_s_14 f_w_400 text-end"><%=order.paymentType%></td>
+                                        </tr>
+                                        <% } }) } %>
+                                    </tbody>
+                                </table>
+                                <a href="/admin/order/orderList" class="badge_btn_semi mt_30 ml_15">View All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="white_card card_height_100 mb_30 ">
+                        <div class="white_card_header">
+                            <div class="box_header m-0">
+                                <div class="main-title">
+                                    <h3 class="m-0">Top Customers</h3>
+                                </div>
+                                <div class="header_more_tool">
+                                    <div class="dropdown">
+                                        <span class="dropdown-toggle" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                                          <i class="ti-more-alt"></i>
+                                        </span>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="white_card_body QA_section">
+                            <div class="QA_table ">
+                                <!-- table-responsive -->
+                                <table class="table lms_table_active2 p-0">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Customer Name</th>
+                                            <th scope="col">Total Purchase</th>
+                                            <th scope="col">Contact Number</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% if(topCusomers.length > 0) { 
+                                            topCusomers.forEach((customer) => { %>
+                                        <tr>
+                                            <td>
+                                                <span class="f_s_14 f_w_400 color_text_1" ><%=customer.customer[0].userName%></span>
+                                            </td>
+                                            <td class="f_s_14 f_w_400 color_text_3">
+                                                <%=customer.totalPurchase%>
+                                            </td>
+                                            <td class="f_s_14 f_w_400 color_text_4">
+                                                <%=customer.customer[0].userMobile%>
+                                            </td>
+                                        </tr>
+                                        <% }) } %>
+                                    </tbody>
+                                </table>
+                                <a href="/admin/user/userList" class="badge_btn_semi mt_30 ml_15">View All Customers</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- footer part -->
+        <%- include('../partials/admin/adminFooter') %>
+    </section>
+    <!-- JS Files Included -->
+    <%- include('../partials/admin/adminJs') %> 
+</body>
+</html>

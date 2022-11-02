@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | New Banner</title>
+<!--css files included-->
+    <%- include('../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- navbar  -->
+    <%- include('../partials/admin/adminNavbar') %>
+   <section class="main_content dashboard_part large_header_bg">
+    <%- include('../partials/admin/adminHeader') %>
+            <!--Body part-->
+            <div class="main_content_iner ">
+                <div class="container-fluid p-0">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="dashboard_header mb_30">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="dashboard_header_title">
+                                            <h3>Upload Banner Image</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dashboard_breadcam text-end">
+                                            <p><a href="/admin/dashboard">Dashboard</a> <i class="fas fa-caret-right"></i>Add Banner</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="white_box mb_30">
+                                <div class="row justify-content-center">
+                                    <div id="checkResult"></div>
+                                    <div class="col-lg-6">
+                                        <div class="modal-content cs_modal">
+                                            <div class="modal-body">
+                                                <% if(message.length > 0) { %>
+                                                <div class="alert alert-success" role="alert">
+                                                    <%=message%>
+                                                  </div>
+                                                  <% } %>
+                                                  <% if(errMsg.length > 0) { %>
+                                                    <div class="alert alert-danger" role="alert">
+                                                        <%=errMsg%>
+                                                      </div>
+                                                      <% } %>
+                                                <form method="post" action="/admin/banner/addBanner" enctype="multipart/form-data">
+                                                    <div class="">
+                                                        <input type="text" name="text1" id="text1" class="form-control" placeholder="Enter first text(optional)">
+                                                    </div>
+                                                    <div class="">
+                                                        <input type="text" name="mainText" id="mainText" class="form-control" placeholder="Enter main text(optional)">
+                                                    </div>
+                                                    <div class="">
+                                                        <input type="text" name="text2" id="text2" class="form-control" placeholder="Enter second text(optional)">
+                                                    </div>
+                                                    <div class="col-md-12 mb-3">
+                                                        <label class="form-label" for="inputState">Select Target Link <span id="categoryErr" class="text-danger"></span></label>
+                                                        <select name="targetLink" id="targetLink" class="form-control">
+                                                            <option value="" selected>Choose...</option>
+                                                            <% if(subcategories.length > 0) { 
+                                                                subcategories.forEach((subCategory) => { %>
+                                                                    <option value="<%=subCategory._id%>"><%=subCategory.subCategoryName%></option>
+                                                                <% } ) } %>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-12 mb-3">
+                                                        <label class="form-label" for="productMrp">Banner Image <span id="subImageErr" class="text-danger"></span><span class="text-danger" id="imageErr"></span></label>
+                                                        <div class=" mb-0">
+                                                            <input type="file" name="baneerImage" class="" id="baneerImage">
+                                                        </div>
+                                                    </div>
+                                                    <button type="submit" id="submitButton" class="btn_1 full_width text-center"> Add</button>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer part -->
+            <%- include('../partials/admin/adminFooter') %>
+        </section>
+        <!-- Checking already exist category  -->
+        <script src="../../../admin/javascript/existCheck.js"></script>
+        <!-- js files included -->
+        <%- include('../partials/admin/adminJs') %>
+    </body>
+</html>

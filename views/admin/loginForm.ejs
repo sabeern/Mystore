@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | Admin Login</title>
+    <style>
+        .main_content {
+            padding-left: 0px !important;
+        }
+    </style>
+    <!-- CSS Files Included -->
+    <%- include('../partials/admin/adminCss') %>
+</head>
+<body>
+
+    <!-- Login sectio  -->
+    <section class="main_content dashboard_part large_header_bg">
+        <div class="main_content_iner">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+
+                    <div class="col-lg-8">
+                        <div class="white_box mb_30">
+                            <div class="row justify-content-center">
+                                <% if(authErr !='' ) { %>
+                                    <div class="alert alert-danger" role="alert">
+                                        <%= authErr %>
+                                    </div>
+                                    <% } %>
+                                        <div class="col-lg-7 col-md-6">
+                                            <div class="modal-content cs_modal">
+                                                <div class="modal-header justify-content-center theme_bg_1">
+                                                    <h5 class="modal-title text_white">Log in</h5>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="/admin/login">
+                                                        <div class="">
+                                                            <input type="text" name="UserName" class="form-control"
+                                                                placeholder="Enter your username" required>
+                                                        </div>
+                                                        <div class="">
+                                                            <input type="password" name="Password" class="form-control"
+                                                                placeholder="Password" required>
+                                                        </div>
+                                                        <button type="submit" class="btn_1 full_width text-center">Log
+                                                            in</button>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- JS Files Included  -->
+    <%- include('../partials/admin/adminJs') %>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MyStore | Shopping Cart</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="../../user/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="../../user/css/style.css" type="text/css">
+</head>
+
+<body>
+    <%- include('../../partials/user/userNavbar') %>
+    <!-- Breadcrumb Section Begin -->
+    <section class="breadcrumb-section set-bg" data-setbg="../../user/img/breadcrumb.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Shopping Cart</h2>
+                        <div class="breadcrumb__option">
+                            <a href="/">Home</a>
+                            <span>Shopping Cart</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Breadcrumb Section End -->
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Products</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% 
+                                grandTotal = 0;
+                                if(cartList.length > 0) { 
+                                    cartList.forEach((cartItem)=>{ 
+                                    %>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="../../uploads/<%= cartItem.product[0].productImage %>" alt="" style="width:100px;height:auto">
+                                        <h5><%= cartItem.product[0].productName %></h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        <%= (cartItem.product[0].productPrice).toFixed(2) %>
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty1">
+                                                <span class="dec qtybtn" onclick="decQuantity('<%=cartItem.item%>')">-</span>
+                                                <input type="text" id="<%=cartItem.item%>" value="<%= cartItem.itemQuantity %>">
+                                                <span class="inc qtybtn" onclick="incQuantity('<%=cartItem.item%>')">+</span>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" id="price<%=cartItem.item%>" value="<%=cartItem.product[0].productPrice%>">
+                                        <% grandTotal += (cartItem.product[0].productPrice * cartItem.itemQuantity) %>
+                                    </td>
+                                    <td class="shoping__cart__total" id="eachTotal<%=cartItem.item%>">
+                                         <%= (cartItem.product[0].productPrice * cartItem.itemQuantity).toFixed(2)  %>
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close" onclick="removeItem('<%=cartItem.item%>')"></span>
+                                    </td>
+                                </tr>
+                                <% }) }else { %>
+                                    <tr>
+                                        <td colspan="4"><h3>Your Cart is Empty</h3></td>
+                                    </tr>
+                                    <% } %>
+                                <input type="hidden" id="grandTotalTextbox" value="<%=grandTotal%>">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="/" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a href="/gp/cart" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                            Upadate Cart</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                </div>
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Cart Total</h5>
+                        <ul>
+                            <li>Subtotal <span id="subTotal">₹<%= (grandTotal).toFixed(2) %></span></li>
+                            <li style="text-decoration:none;font-weight:200;">Delivery Charge 
+                                <span id='deliveryPrice'><% if(grandTotal <=99){ deliveryCharge = 50 %><span>₹50.00</span> <% } else { deliveryCharge = 0 %>
+                                    <span class="text-success"><b>Free</b></span> <% } %></span>
+                            </li>
+                            <li>Total <span id="total">₹<%= (grandTotal+deliveryCharge).toFixed(2) %></span></li>
+                        </ul>
+                        <form action="/gp/checkout" method="post">
+                            <% if(cartList.length > 0) { %>
+                            <input type="hidden" id="cartId" name="cartId" value="<%=cartList[0]._id%>">
+                            <input type="hidden" id="deliveryCharge" name="deliveryCharge" value="<%=deliveryCharge%>">
+                            <button type="submit" class="primary-btn">PROCEED TO CHECKOUT</button>
+                            <% } %>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shoping Cart Section End -->
+    <%- include('../../partials/user/userFooter') %>
+    <script src="../../user/javascripts/loginSignup.js"></script>
+    <script src="../../user/javascripts/homeMenuLoad.js"></script>
+    <script src="../../user/javascripts/cartControl.js"></script>
+    <!-- Js Plugins -->
+    <script src="../../user/js/jquery-3.3.1.min.js"></script>
+    <script src="../../user/js/bootstrap.min.js"></script>
+    <script src="../../user/js/jquery.nice-select.min.js"></script>
+    <script src="../../user/js/jquery-ui.min.js"></script>
+    <script src="../../user/js/jquery.slicknav.js"></script>
+    <script src="../../user/js/mixitup.min.js"></script>
+    <script src="../../user/js/owl.carousel.min.js"></script>
+    <script src="../../user/js/main.js"></script>
+
+
+</body>
+
+
+<!-- Mirrored from technext.github.io/ogani/shoping-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:40 GMT -->
+</html>

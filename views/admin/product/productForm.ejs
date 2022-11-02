@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | New Product</title>
+<!-- CSS Files Included-->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar Included -->
+    <%- include('../../partials/admin/adminNavbar') %>
+        <section class="main_content dashboard_part large_header_bg">
+        <%- include('../../partials/admin/adminHeader') %>
+            <!-- Body Content Part  -->
+            <div class="main_content_iner ">
+                <div class="container-fluid p-0">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="dashboard_header mb_30">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="dashboard_header_title">
+                                            <h3>New Product</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dashboard_breadcam text-end">
+                                            <p><a href="index-2.html">Dashboard</a> 
+                                                <i class="fas fa-caret-right"></i>Add Product</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="white_card card_height_100 mb_30">
+                                <div class="white_card_body">
+                                    <div class="card-body">
+                                        <form action="/admin/product/addProduct" method="post"
+                                            enctype="multipart/form-data" onsubmit="return validateForm()">            
+                                            <div class="alert alert-danger" role="alert" id="requiredErr">
+                                                Plaese Fill the Required Fields
+                                              </div>
+                                              <% if(errMsg) { %>
+                                                <div class="alert alert-danger" role="alert" id="requiredErr">
+                                                    <%= errMsg %>
+                                                  </div>
+                                              <% } %>
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label" for="productName">Product Name <span class="text-danger" id="nameErr"></span></span></label>
+                                                    <input type="text" class="form-control" name="productName"
+                                                        id="productName" placeholder="Product Name" required>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-12">
+                                                    <label class="form-label" for="productDescription">Product
+                                                        Description <span class="text-danger" id="descriptionErr"></span></label>
+                                                    <input type="text" class="form-control" name="productDescription"
+                                                        id="productDescription" placeholder="Product Details">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="category">Category <span class="text-danger" id="categoryErr"></span></label>
+                                                    <select id="categoryId" name="productCategoryId" class="form-control">
+                                                        <option value="">Choose...</option>
+                                                        <% category.forEach(eachCategory=> { %>
+                                                            <option value="<%= eachCategory._id %>">
+                                                                <%= eachCategory.categoryName %>
+                                                            </option>
+                                                            <% }) %>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="form-label" for="subCategory">Sub-Category <span class="text-danger" id="subCategoryErr"></span></label>
+                                                    <div id="subcategory">
+                                                        <select id="subCategoryId" name="productSubCategoryId"
+                                                            class="form-control">
+                                                            <option value="">Choose...</option>
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <div class="col-md-3">
+                                                    <label class="form-label" for="brandId">Brand <span class="text-danger" id="brandErr"></span></label>
+                                                    <select id="productBrandId" name="productBrandId" class="form-control">
+                                                        <option selected="">Choose...</option>
+                                                        <% brand.forEach(eachBrand=> { %>
+                                                            <option value="<%= eachBrand._id %>">
+                                                                <%= eachBrand.brandName %>
+                                                            </option>
+                                                            <% }) %>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label" for="productStock">Stcock <span class="text-danger" id="stockErr"></span></label>
+                                                    <input type="text" class="form-control" name="productStock"
+                                                        id="productStock" placeholder="Stock">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label class="form-label" for="productPrice">Selling
+                                                        Price <span class="text-danger" id="priceErr"></span></label>
+                                                    <input type="text" class="form-control" name="productPrice"
+                                                        id="productPrice" placeholder="Product Price">
+                                                </div>
+                                                <div class=" col-md-3">
+                                                    <label class="form-label" for="productMrp">Product Mrp <span class="text-danger" id="mrpErr"></span></label>
+                                                    <input type="text" class="form-control" id="productMrp"
+                                                        name="productMrp" placeholder="Mrp">
+                                                </div>
+                                            </div>
+                                            <div class="row mb-3">
+                                                <label class="form-label" for="productMrp">Product Image <span class="text-danger" id="imageErr"></span></label>
+                                                <div class=" mb-0">
+                                                    <input type="file" name="productImage" class=""
+                                                        id="productImage">
+                                                </div>
+                                            </div>
+                                            <button type="submit" id="submitbtn" class="btn btn-primary">Add Product</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- footer part -->
+            <%- include('../../partials/admin/adminFooter') %>
+        </section>
+        <script src="../../../admin/javascript/adminProduct.js"></script>
+        <!-- footer  -->
+        <%- include('../../partials/admin/adminJs') %>
+</body>
+</html>
