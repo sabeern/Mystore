@@ -50,7 +50,7 @@ const bannerModel = require('./models/admin/bannerModel');
 
 mongoose.connect(process.env.DBCONNECT);
 app.get('/',async (req,res) => {
-    res.render('./user/test', { title:'MyStore | Online Grocery',msg:'This is testing' });
+    res.render('./user/test');
 });
 
 //user routes
