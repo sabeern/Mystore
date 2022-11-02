@@ -50,29 +50,7 @@ const bannerModel = require('./models/admin/bannerModel');
 
 mongoose.connect(process.env.DBCONNECT);
 app.get('/',async (req,res) => {
-    const allCategories = await categoryModel.find({ delFlag: 0 });
-    const allSubCategories = await subCategoryModel.find({ delFlag: 0 });
-    const moreStockProduct = await productModel.aggregate([{$match:{delFlag:0}},{$sort:{productStock:-1}},{$limit:8}]);
-    const latestProduct = await productModel.aggregate([{$match:{delFlag:0}},{$sort:{productStock:-1}},{$limit:6}]);
-    let userFullname,cartCount;
-    if (req.session.user) {
-        userFullname = req.session.user.userFullname;
-        let userId = req.session.user.userId;
-        cartCount = await cartModel.aggregate([{$match:{userId}},{$project:{count:{$size:"$cartItems"}}}]);
-        if(cartCount.length < 1) {
-            cartCount = false;
-        }
-        wishlistCount = await wishlistModel.aggregate([{$match:{userId}},{$project:{count:{$size:"$wishlistItems"}}}]);
-        if(wishlistCount.length < 1) {
-            wishlistCount = false;
-        }
-    } else {
-        userFullname = false;
-        cartCount = false;
-        wishlistCount = false;
-    }
-    const bannerDetails = await bannerModel.find({}).sort({uploadDate:-1}).limit(3);
-    res.render('./user/home', { allCategories, allSubCategories, userFullname,moreStockProduct,latestProduct,cartCount,title:'MyStore | Online Grocery',bannerDetails });
+    res.render('./user/test', { title:'MyStore | Online Grocery',msg:'This is testing' });
 });
 
 //user routes
