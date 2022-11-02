@@ -50,7 +50,9 @@ const bannerModel = require('./models/admin/bannerModel');
 
 mongoose.connect(process.env.DBCONNECT);
 app.get('/',async (req,res) => {
-    res.status(200).render('./user/test');
+    res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+    res.render('./user/test');
 });
 
 //user routes
