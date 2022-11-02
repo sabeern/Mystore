@@ -82,4 +82,4 @@ app.use('/admin/banner',bannerRoutes);
 app.use((req, res) => {
   res.redirect('/');
 });
-app.listen(process.env.LISTEN_PORT || 80);
+app.listen(process.env.LISTEN_PORT || 3000);
