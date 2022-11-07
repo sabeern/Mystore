@@ -12,9 +12,9 @@ const home = async (req, res) => {
     const moreStockProduct = await productModel.aggregate([{$match:{delFlag:0}},{$sort:{productStock:-1}},{$limit:8}]);
     const latestProduct = await productModel.aggregate([{$match:{delFlag:0}},{$sort:{addedDate:-1}},{$limit:6}]);
     //const fruitVeg = await productModel.aggregate([{$match:{delFlag:0}},{$sort:{addedDate:-1}},{$limit:6}]);
-    const fruitVeg = await productModel.aggregate([{$match:{delFlag:0,productCategoryId:mongoose.Types.ObjectId('63688eb63c1b22bf125563ed')}},{$sort:{addedDate:-1}},{$limit:6}]);
+    const fruitVeg = await productModel.aggregate([{$match:{delFlag:0,productCategoryId:mongoose.Types.ObjectId('63688645320563aff793aa52')}},{$sort:{addedDate:-1}},{$limit:6}]);
     //const meatFish = await productModel.aggregate([{$match:{delFlag:0}},{$sort:{addedDate:-1}},{$limit:6}]);
-    const meatFish = await productModel.aggregate([{$match:{delFlag:0,productCategoryId:mongoose.Types.ObjectId('6368b13a97ac194c9df9392c')}},{$sort:{addedDate:-1}},{$limit:6}]);
+    const meatFish = await productModel.aggregate([{$match:{delFlag:0,productCategoryId:mongoose.Types.ObjectId('63688682320563aff793aa70')}},{$sort:{addedDate:-1}},{$limit:6}]);
     let userFullname,cartCount;
     if (req.session.user) {
         userFullname = req.session.user.userFullname;
