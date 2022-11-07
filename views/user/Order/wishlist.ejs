@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MyStore | Whishlist</title>
-
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
 
@@ -23,8 +23,8 @@
 </head>
 
 <body>
+    <!--Imported Header Content-->
     <%- include('../../partials/user/userNavbar') %>
-
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="../../user/img/breadcrumb.jpg">
         <div class="container">
@@ -42,7 +42,7 @@
         </div>
     </section>
     <!-- Breadcrumb Section End -->
-    <!-- Shoping Cart Section Begin -->
+    <!-- Content Section Begin -->
     <section class="shoping-cart spad">
         <div class="container">
             <div class="row">
@@ -98,10 +98,13 @@
             </div>
         </div>
     </section>
-    <!-- Shoping Cart Section End -->
+    <!-- Content Section End -->
+    <!-- Imported Footer-->
     <%- include('../../partials/user/userFooter') %>
+    <!-- Login/signup and Category Menu Loading -->
     <script src="../../user/javascripts/loginSignup.js"></script>
     <script src="../../user/javascripts/homeMenuLoad.js"></script>
+    <!-- Cart and Wishlist Controles -->
     <script src="../../user/javascripts/addToWishlist.js"></script>
     <script src="../user/javascripts/addToCart.js"></script>
     <!-- Js Plugins -->
@@ -113,10 +116,5 @@
     <script src="../../user/js/mixitup.min.js"></script>
     <script src="../../user/js/owl.carousel.min.js"></script>
     <script src="../../user/js/main.js"></script>
-
-
 </body>
-
-
-<!-- Mirrored from technext.github.io/ogani/shoping-cart.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:40 GMT -->
 </html>

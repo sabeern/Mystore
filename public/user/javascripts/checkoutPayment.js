@@ -22,10 +22,11 @@ function submitCheckout() {
     const totalAmount = document.getElementById('totalAmount').value;
     const selectedAddress = $("input[type='radio'][name='selectedAddress']:checked").val();
     const deliveryCharge = document.getElementById('deliveryCharge').value;
+    const couponDiscount = document.getElementById('couponDiscount').value;
     fetch('/gp/checkout/placeorder', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ selectedAddress,fullName,mobileNumber,pincode,locality,address,district,state,orderNote,paymentMethod,cartId,deliveryDate,totalAmount,deliveryCharge })
+    body: JSON.stringify({ selectedAddress,fullName,mobileNumber,pincode,locality,address,district,state,orderNote,paymentMethod,cartId,deliveryDate,totalAmount,deliveryCharge,couponDiscount })
 }).then(res => res.json()).then(data => {
     if(data.msg == 'COD') {
         window.location = '/gp/checkout/orderSuccess';

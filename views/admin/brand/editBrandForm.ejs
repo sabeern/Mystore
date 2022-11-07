@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>MyStore | New Brand</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
+    <!-- CSS File Included -->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar Included  -->
+    <%- include('../../partials/admin/adminNavbar') %>
+    <section class="main_content dashboard_part large_header_bg">
+        <!-- Header Included -->
+        <%- include('../../partials/admin/adminHeader') %>
+    <!-- Content Section Begin -->
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-12">
+                        <div class="dashboard_header mb_30">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="dashboard_header_title">
+                                        <h3>Edit Brand</h3>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="dashboard_breadcam text-end">
+                                        <p><a href="/admin/dashboard">Dashboard</a> <i class="fas fa-caret-right"></i>
+                                            Edit Brand</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="white_box mb_30">
+                            <div class="row justify-content-center">
+                                <div id="checkResult"></div>
+                                <div class="col-lg-6">
+                                    <div class="modal-content cs_modal">
+                                        <div class="modal-body">
+                                            <form method="post" action="/admin/brand/updateBrand" onsubmit="return validateBrand()">
+                                                <div class="">
+                                                    <span id="brandErr" class="text-danger"></span>
+                                                    <input type="hidden" id="brandId" name="brandId" value="<%=result._id%>">
+                                                    <input type="text" name="brandName" id="brandName" class="form-control"
+                                                       value="<%=result.brandName%>" placeholder="Brand Name" required>
+                                                </div>
+                                                <button type="submit" id="submitButton"
+                                                    class="btn_1 full_width text-center"> Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content Section End -->
+        <!-- Footer Included -->
+        <%- include('../../partials/admin/adminFooter') %>
+    </section>
+    <!-- Brand Form Validating -->
+    <script src="../../../admin/javascript/formValidations.js"></script>
+    <!-- js files included  -->
+    <%- include('../../partials/admin/adminJs') %>
+</body>
+</html>

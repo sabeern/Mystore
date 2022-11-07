@@ -30,5 +30,19 @@ const viewUserDetails = async (req,res) => {
                             {$lookup:{from:process.env.PRODUCT_COLLECTION,localField:'orderItems.productId',foreignField:'_id',as:'product'}}]);
             res.render('./admin/order/userOrder',{orderDetail});
 }
+const sortOrder = async (req,res) => {
+    const { orderStatus,orderSearchContent } = req.body;
+    let searchAmount = Number(orderSearchContent);
+    let statusSearch;
+    if(orderStatus.length > 0) {
+        statusSearch = {$match:{orderStatus,delFlag:0}}
+    }else {
+        statusSearch = {$match:{orderStatus:{$ne:orderStatus},delFlag:0}};
+    }
+    const sortedOrders = await orderModel.aggregate([statusSearch,{$lookup:{from:process.env.USER_COLLECTION,localField:'userId',foreignField:'_id',as:'user'}},{$unwind:'$user'},
+                                            {$match:{$or:[{'user.userName':{$regex:new RegExp('.*'+orderSearchContent+'.*','i')}},{totalAmount:searchAmount}]}},
+                                            {$sort:{orderDate:-1}}]);
+    res.send({sortedOrders});
+}
 
-module.exports = { orderList,updateOrderStatus,deleteOrder,viewUserDetails };
+module.exports = { orderList,updateOrderStatus,deleteOrder,viewUserDetails,sortOrder };

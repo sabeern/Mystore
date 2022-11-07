@@ -25,6 +25,9 @@ function subCategoryExistCheck() {
     const subCategoryTextbox = document.getElementById('subCategoryText');
         const subCategoryName = subCategoryTextbox.value;
         const categoryId = document.getElementById('selectCategory').value;
+        if(categoryId.length < 1) {
+            return false;
+        }
         let displayContent = document.getElementById('checkResult');
         let submitButton = document.getElementById('submitButton');
         fetch('/admin/subCategory/existSubCategory', {

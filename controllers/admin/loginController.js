@@ -90,15 +90,22 @@ const generateSalesReport = async (req,res) => {
     startDate.setHours(5,31,0,0);
     endDate = new Date(endDate);
     endDate.setHours(5,31,0,0);
-    let monthlySale = false,customerSale = false;
+    let monthlySale =false, customerSale = false, categorySale = false;
     if(reportType == 'month') {
         monthlySale = await orderModel.aggregate([{$match:{delFlag:0,orderStatus:{$nin:['pending','canceled']},orderDate:{$gte:startDate,$lte:endDate}}},
                     {$group:{_id: {$substr: ['$orderDate', 0, 7]},sales:{$sum:'$totalAmount'}}}]);
     }else if(reportType == 'customer') {
         customerSale = await orderModel.aggregate([{$match:{delFlag:0,orderStatus:{$nin:['pending','canceled']},orderDate:{$gte:startDate,$lte:endDate}}},{$group:{_id:'$userId',totalPurchase:{ $sum:'$totalAmount'}}},{$sort:{totalPurchase:-1}},
                              {$lookup:{from:process.env.USER_COLLECTION,localField:'_id',foreignField:'_id',as:'customer'}}]);
+    }else if(reportType == 'category') {
+        categorySale = await orderModel.aggregate([{$match:{delFlag:0,orderStatus:{$nin:['pending','canceled']},orderDate:{$gte:startDate,$lte:endDate}}},
+                        {$unwind:'$orderItems'},{$project:{total: { $multiply: [ "$orderItems.productQuantity", "$orderItems.productPrice" ] },productId:'$orderItems.productId',_id:0}},
+                        {$lookup:{from:process.env.PRODUCT_COLLECTION,localField:'productId',foreignField:'_id',as:'product'}},
+                        {$unwind:'$product'},{$project:{total:'$total',categoryId:'$product.productCategoryId'}},
+                        {$group:{_id:'$categoryId',categorySale:{$sum:'$total'}}},
+                        {$lookup:{from:process.env.CATEGORY_COLLECTION,localField:'_id',foreignField:'_id',as:'category'}},{$unwind:'$category'},{$sort:{categorySale:-1}}]);
     }
-    res.send({monthlySale,customerSale});
+    res.send({monthlySale,customerSale,categorySale});
 }
 const searchOrder = async (req,res) => {
     const {orderId} = req.body;

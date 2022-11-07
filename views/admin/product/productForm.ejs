@@ -4,6 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>MyStore | New Product</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
 <!-- CSS Files Included-->
     <%- include('../../partials/admin/adminCss') %>
 </head>
@@ -11,8 +12,9 @@
     <!-- Navbar Included -->
     <%- include('../../partials/admin/adminNavbar') %>
         <section class="main_content dashboard_part large_header_bg">
+            <!-- Header Included -->
         <%- include('../../partials/admin/adminHeader') %>
-            <!-- Body Content Part  -->
+            <!-- Content Section Begin  -->
             <div class="main_content_iner ">
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
@@ -26,7 +28,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dashboard_breadcam text-end">
-                                            <p><a href="index-2.html">Dashboard</a> 
+                                            <p><a href="/admin/dashboard">Dashboard</a> 
                                                 <i class="fas fa-caret-right"></i>Add Product</p>
                                         </div>
                                     </div>
@@ -130,11 +132,13 @@
                     </div>
                 </div>
             </div>
-            <!-- footer part -->
+            <!-- Content Section End -->
+            <!-- Footer Included -->
             <%- include('../../partials/admin/adminFooter') %>
         </section>
+        <!-- Form Validation and Change Subcategory -->
         <script src="../../../admin/javascript/adminProduct.js"></script>
-        <!-- footer  -->
+        <!-- Footer Included  -->
         <%- include('../../partials/admin/adminJs') %>
 </body>
 </html>

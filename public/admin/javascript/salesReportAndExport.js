@@ -72,6 +72,23 @@ function showReport() {
            });
            resultTable += `</tbody></table>`;
         }
+        if(data.categorySale.length > 0) {
+            resFlag = 1;
+            resultTable += `<table class="table lms_table_active" id="tbl_exporttable_to_xls">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Sl.No</th>
+                                    <th scope="col">Category Name</th>
+                                    <th scope="col">Sales Value</th>
+                                </tr>
+                            </thead><tbody>`;
+                                let count = 1;
+                let categorySale = data.categorySale;
+                categorySale.forEach((saleValue)=> {
+            resultTable += `<tr><td>${count++}</td><td>${saleValue.category.categoryName}</td><td>${saleValue.categorySale}</td></tr>`;
+           });
+           resultTable += `</tbody></table>`;
+        }
         if(resFlag == 0) {
             resultTable = '';
         }

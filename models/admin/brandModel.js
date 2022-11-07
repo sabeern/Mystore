@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const brandSchema = mongoose.Schema({
     brandName: {
         type: String,
-        required: true
+        required: true,
+        unique:true
     },
     delFlag: {
         type: Number,

@@ -4,15 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>MyStore | Order List</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
     <!-- Css File Included -->
     <%- include('../../partials/admin/adminCss') %>
 </head>
 <body class="crm_body_bg">
-    <!-- Navbar -->
+    <!-- Navbar Included -->
     <%- include('../../partials/admin/adminNavbar') %>
     <section class="main_content dashboard_part large_header_bg">
+        <!-- Header Included -->
         <%- include('../../partials/admin/adminHeader') %>
-        <!-- Body Content  -->
+        <!-- Content Section Begin  -->
         <div class="main_content_iner ">
             <div class="container-fluid p-0">
                 <div class="row justify-content-center">
@@ -22,12 +24,22 @@
                                 <div class="QA_section">
                                     <div class="white_box_tittle list_header">
                                         <h3>Order List</h3>
+                                        <div class="serach_field_2 mb-2" style="width: 300px;">
+                                                <select class="form-control" id="orderSearchStatus" name="orderSearchStatus" onchange="sortOrder()">
+                                                        <option value="">Select order status...</option>
+                                                        <option value="pending">Pending</option>
+                                                        <option value="approved">Approved</option>
+                                                        <option value="shipped">Shipped</option>
+                                                        <option value="delivered">Delivered</option>
+                                                        <option value="canceled">Canceled</option>
+                                                </select>
+                                        </div>
                                         <div class="box_right d-flex lms_block">
                                             <div class="serach_field_2" style="width: 300px;">
                                                 <div class="search_inner">
                                                     <div class="search_field">
-                                                        <input type="text" id="searchContent" name="searchContent" onkeyup=""
-                                                            placeholder="Search content here...">
+                                                        <input type="text" id="orderSearchContent" name="orderSearchContent" onkeyup="sortOrder()"
+                                                            placeholder="Search Name or Amount...">
                                                     </div>
                                                     <button type="submit"> <i class="ti-search"></i> </button>
                                                 </div>
@@ -36,7 +48,7 @@
                                     </div>
                                     <div class="QA_table mb_30">
                                         <!-- table-responsive -->
-                                        <div id="categoryTable">
+                                        <div id="orderTable">
                                             <table class="table lms_table_active">
                                                 <thead>
                                                     <tr>
@@ -73,9 +85,9 @@
                                                             </td>
                                                             <td>
                                                                 <% deliveryDate = eachOrder.deliveryDate
-                                                                deliveryDate = deliveryDate.getFullYear()+'/'+deliveryDate.getMonth()+'/'+deliveryDate.getDate() 
+                                                                deliveryDate = deliveryDate.getFullYear()+'/'+(+deliveryDate.getMonth()+1)+'/'+(deliveryDate.getDate()) 
                                                                 dateNow = new Date();
-                                                                currentDate = dateNow.getFullYear()+'/'+dateNow.getMonth()+'/'+dateNow.getDate()
+                                                                currentDate = dateNow.getFullYear()+'/'+(+dateNow.getMonth()+1)+'/'+(dateNow.getDate())
                                                                 if(deliveryDate == currentDate & eachOrder.orderStatus == 'approved') {%>
                                                                 <span class="text-success"><%=deliveryDate%></span>
                                                                     <% } else if(deliveryDate < currentDate & eachOrder.orderStatus == 'approved') { %>
@@ -113,6 +125,7 @@
                 </div>
             </div>
         </div>
+        <!-- Content Section End -->
         <!-- Status Change Modal -->
         <div class="modal fade" id="statusModal" tabindex="-1" role="dialog"
             aria-labelledby="statusModalTitle" aria-hidden="true">
@@ -139,6 +152,7 @@
                 </div>
             </div>
         </div>
+        <!-- Status Change Modal End -->
         <!-- Delete Confirmation Modal -->
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog"
             aria-labelledby="deleteModalTitle" aria-hidden="true">
@@ -163,34 +177,14 @@
                 </div>
             </div>
         </div>
-        <!-- footer part -->
+        <!-- Delete Confirmation Modal End -->
+        <!-- Footer Included -->
         <%- include('../../partials/admin/adminFooter') %>
     </section>
-    <script>
-        function changeStatus(orderId,status) {
-            document.getElementById('orderId').value = orderId;
-            const statusField = document.getElementById('orderStatus');
-            const updateButton = document.getElementById('confirmButton');
-            if(status == 'approved') {
-                statusField.innerHTML = `<option value="shipped">Shipped</option>
-                                        <option value="delivered">Delivered</option>
-                                        <option value="canceled">Canceled</option>`;
-                    updateButton.disabled = false;
-            }else if(status == 'shipped') {
-                statusField.innerHTML = `<option value="delivered">Delivered</option>
-                                        <option value="canceled">Canceled</option>`;
-                    updateButton.disabled = false;
-            }else {
-                updateButton.disabled = true;
-            }
-        }
-    function deleteOrder(orderId) {
-        document.getElementById('deleteOrderId').value = orderId;
-    }
-    </script>
     <!-- Included Js Files -->
     <%- include('../../partials/admin/adminJs') %>
+    <!-- Order Search & Change Status & Change Delete Id-->
+    <script src="../../../admin/javascript/orderSearchStatus.js"></script>
     <script src="../../../admin/javascript/metisMenu.js"></script>
-    <script src="../../../admin/javascript/categoryList.js"></script>
 </body>
 </html>

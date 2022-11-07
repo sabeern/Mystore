@@ -4,15 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>MyStore | Product List</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
     <!--CSS Files Included-->
     <%- include('../../partials/admin/adminCss') %>
 </head>
 <body class="crm_body_bg">
-<!--Navbar-->
+<!-- Navbar Included -->
 <%- include('../../partials/admin/adminNavbar') %>
     <section class="main_content dashboard_part large_header_bg">
+        <!-- Header Included -->
         <%- include('../../partials/admin/adminHeader') %>
-        <!-- Body Content Part  -->
+        <!-- Content Section Begin  -->
         <div class="main_content_iner ">
             <div class="container-fluid p-0">
                 <div class="row justify-content-center">
@@ -94,6 +96,7 @@
                 </div>
             </div>
         </div>
+        <!-- Content Section End -->
         <!-- Delete Confirmation Modal -->
         <div class="modal fade" id="productDeleteModal" tabindex="-1" role="dialog"
             aria-labelledby="productDeleteModalTitle" aria-hidden="true">
@@ -117,12 +120,14 @@
                 </div>
             </div>
         </div>
-        <!-- footer part -->
+        <!-- Delete Confirmation Modal End -->
+        <!-- Footer Included -->
         <%- include('../../partials/admin/adminFooter') %>
     </section>
     <!-- JS Files Included -->
     <%- include('../../partials/admin/adminJs') %>
     <script src="../../../admin/javascript/metisMenu.js"></script>
+    <!-- Search Product & Change Modal Id-->
     <script src="../../../admin/javascript/adminProduct.js"></script>
     <script>
         const element = document.getElementById("newConfirmButton");

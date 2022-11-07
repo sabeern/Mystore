@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | New Coupon</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
+<!-- CSS File Included -->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar Included  -->
+    <%- include('../../partials/admin/adminNavbar') %>
+   <section class="main_content dashboard_part large_header_bg">
+    <!-- Header Included -->
+    <%- include('../../partials/admin/adminHeader') %>
+            <!-- Content Section Begin -->
+            <div class="main_content_iner ">
+                <div class="container-fluid p-0">
+                    <div class="row justify-content-center">
+                        <div class="col-12">
+                            <div class="dashboard_header mb_30">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="dashboard_header_title">
+                                            <h3>New Coupon</h3>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="dashboard_breadcam text-end">
+                                            <p><a href="/admin/dashboard">Dashboard</a> <i class="fas fa-caret-right"></i>Add Coupon</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="white_box mb_30">
+                                <div class="row justify-content-center">
+                                    <div id="checkResult"></div>
+                                    <div class="col-lg-6">
+                                        <div class="modal-content cs_modal">
+                                            <div class="modal-body">
+                                                <% if(errMsg.length > 0) {%>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <%= errMsg %>
+                                                  </div>
+                                                  <% } %>
+                                                <form method="post" action="/admin/coupon/addCoupon" onsubmit="return validateCoupon()">
+                                                    <div class="">
+                                                        <span class="text-danger" id="couponCodeErr"></span>
+                                                        <input type="text" name="couponCode" id="couponCode" class="form-control"
+                                                            placeholder="Coupon Code" required>
+                                                    </div>
+                                                    <div class="">
+                                                        <span class="text-danger" id="purchaseAmountErr"></span>
+                                                        <input type="text" name="minPurchaseAmount" id="minPurchaseAmount" class="form-control"
+                                                            placeholder="Applicable Purchase Amount" required>
+                                                    </div>
+                                                    <div class="">
+                                                        <span class="text-danger" id="percentageErr"></span>
+                                                        <input type="text" name="couponPercentage" id="couponPercentage" class="form-control"
+                                                            placeholder="Discount Percentage" required>
+                                                    </div>
+                                                    <div class="">
+                                                        <span class="text-danger" id="maxLimitErr"></span>
+                                                        <input type="text" name="maxLimit" id="maxLimit" class="form-control"
+                                                            placeholder="Maximum Limit" required>
+                                                    </div>
+                                                    <div class="">
+                                                        <span class="text-danger" id="expiryDateErr"></span>
+                                                        <input class="datepicker-here  digits" type="text" id="expiryDate" name="expiryDate" data-language="en" data-multiple-dates-separator=", " data-position="bottom left" placeholder="Coupon Expiry Date">
+                                                    </div>
+                                                    <button type="submit" id="submitButton" class="btn_1 full_width text-center"> Add</button>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- Content Section End -->
+            <!-- Footer Included -->
+            <%- include('../../partials/admin/adminFooter') %>
+            <!-- Validating Coupon Form-->
+            <script src="../../../admin/javascript/deleteCoupon.js"></script>
+        <!-- js files included -->
+        <%- include('../../partials/admin/adminJs') %>
+    </body>
+</html>

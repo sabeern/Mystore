@@ -6,6 +6,7 @@ const productModel = require('../../models/admin/productModel');
 const wishlistModel = require('../../models/user/wishlistModel');
 const orderModel = require('../../models/user/orderModel');
 const userModel = require('../../models/user/userModel');
+const couponModel = require('../../models/admin/couponModel');
 const Razorpay = require('razorpay');
 const crypto = require('crypto');
 const instance = new Razorpay({
@@ -118,14 +119,26 @@ const checkout = async (req,res) => {
                         {$lookup:{from:process.env.PRODUCT_COLLECTION,localField:'item',foreignField:'_id',as:'product'}}]);
         let userId = req.session.user.userId;    
         const profileDetails = await userModel.findOne({$and:[{_id:userId},{delFlag:0}]});
-    res.render('./user/order/checkout',{orderList,profileDetails,allSubCategories});
+        const cartTotal = await cartModel.aggregate([{$match:{_id:cartId}},{$unwind:'$cartItems'},
+                        {$project:{_id:0,item:'$cartItems.productId',itemQuantity:'$cartItems.productQuantity'}},
+                        {$lookup:{from:process.env.PRODUCT_COLLECTION,localField:'item',foreignField:'_id',as:'product'}},
+                        {$unwind:'$product'},{$group:{_id:null,total:{$sum: { $multiply: [ "$itemQuantity", "$product.productPrice" ] }}}}]);
+        let totalAmount = 0 ,couponCode='';
+        if(cartTotal.length > 0) {
+            totalAmount = cartTotal[0].total;
+        }
+        const couponAvailable = await couponModel.find({$and:[{delFlag:0,minPurchaseAmount:{$lte:totalAmount},expiryDate:{$gte:new Date()}}]}).sort({minPurchaseAmount:-1}).limit(1);
+        if(couponAvailable.length > 0) {
+            couponCode = couponAvailable[0].couponCode;
+        }
+    res.render('./user/order/checkout',{orderList,profileDetails,allSubCategories,couponCode});
 }
 const placeorder = async (req,res) => {
-    let fullName,mobileNumber,pincode,locality,address,district,state,orderNote,paymentMethod,cartId,deliveryDate,totalAmount,deliveryCharge;
+    let fullName,mobileNumber,pincode,locality,address,district,state,orderNote,paymentMethod,cartId,deliveryDate,totalAmount,deliveryCharge,couponDiscount;
     if(req.body.selectedAddress == 'new') {
-        ({fullName,mobileNumber,pincode,locality,address,district,state,orderNote,paymentMethod,cartId,deliveryDate,totalAmount,deliveryCharge}  = req.body);
+        ({fullName,mobileNumber,pincode,locality,address,district,state,orderNote,paymentMethod,cartId,deliveryDate,totalAmount,deliveryCharge,couponDiscount}  = req.body);
     }else {
-        ({orderNote,paymentMethod,cartId,deliveryDate,totalAmount,deliveryCharge}  = req.body);
+        ({orderNote,paymentMethod,cartId,deliveryDate,totalAmount,deliveryCharge,couponDiscount}  = req.body);
         let addressId = req.body.selectedAddress;
         addressId = mongoose.Types.ObjectId(addressId);
         const addressSelected = await userModel.aggregate([{$match:{_id:req.session.user.userId}},{$unwind:'$userAddress'},{$match:{'userAddress._id':addressId}}]);
@@ -163,7 +176,7 @@ const placeorder = async (req,res) => {
     let orderId = Math.floor(Math.random()*90000) + 10000;
     const newOrder = new orderModel({
         userId,deliveryAddress:[{fullName,mobileNumber,pincode,locality,address,district,state}],
-        orderItems,deliveryDate,paymentType:paymentMethod,orderStatus,orderNote,totalAmount,orderId,cartId,deliveryCharge
+        orderItems,deliveryDate,paymentType:paymentMethod,orderStatus,orderNote,totalAmount,orderId,cartId,deliveryCharge,discount:couponDiscount
     });
     await orderModel.deleteOne({cartId});
     const insertedData = await newOrder.save();
@@ -224,7 +237,7 @@ const orderSuccess = async (req,res) => {
             return;
         }
         orderList = await orderModel.aggregate([{$match:{_id:orderId}},{$unwind:'$orderItems'},
-                        {$project:{orderId:'$orderId',totalAmount:'$totalAmount',deliveryCharge:'$deliveryCharge',address:'$deliveryAddress',item:'$orderItems.productId',itemQuantity:'$orderItems.productQuantity',itemPrice:'$orderItems.productPrice'}},
+                        {$project:{orderId:'$orderId',totalAmount:'$totalAmount',deliveryCharge:'$deliveryCharge',discount:'$discount',address:'$deliveryAddress',item:'$orderItems.productId',itemQuantity:'$orderItems.productQuantity',itemPrice:'$orderItems.productPrice'}},
                         {$lookup:{from:process.env.PRODUCT_COLLECTION,localField:'item',foreignField:'_id',as:'product'}}]);
     } else {
         userFullname = false;

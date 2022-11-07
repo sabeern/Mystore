@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MyStore | My Orders</title>
-
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
 
@@ -23,8 +23,9 @@
 </head>
 
 <body>
+    <!--Imported Header Content-->
     <%- include('../../partials/user/userNavbar') %>
-    <!-- Product Section Begin -->
+    <!-- Content Section Begin -->
     <section class="product spad">
         <div class="container">
             <div class="row">
@@ -68,7 +69,7 @@
                                                 <a href="/account/myorder/orderDetails/<%=eachOrder._id%>">#<%=eachOrder.orderId%></a>
                                             </td>
                                             <td><% orderDate = eachOrder.orderDate
-                                                orderDate = orderDate.getDate()+'/'+orderDate.getMonth()+'/'+orderDate.getFullYear() %>
+                                                orderDate = orderDate.getDate()+'/'+(+orderDate.getMonth()+1)+'/'+orderDate.getFullYear() %>
                                                 <%=orderDate%>
                                             </td>
                                             <td><%=eachOrder.totalAmount%></td>
@@ -101,37 +102,43 @@
             </div>
         </div>
     </section>
-    <!-- Product Section End -->
-    <!-- Delete Confirmation Modal -->
+    <!-- Content Section End -->
+<!-- Order Cancel Confirmation Modal -->
 <div class="modal fade" id="orderCancelModal" tabindex="-1" role="dialog"
-aria-labelledby="orderCancelModalTitle" aria-hidden="true">
-<div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="orderCancelModalTitle">Please Confirm</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            Are you sure want to cancel order?
-        </div>
-        <div class="modal-footer">
-            <form action="/account/myorder/updateOrder" method="post">
-            <input type="hidden" id="orderId" name="orderId">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            <button class="btn btn-primary" type="submit">Confirm</button>
-        </form>
+                    aria-labelledby="orderCancelModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="orderCancelModalTitle">Please Confirm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure want to cancel order?
+            </div>
+            <div class="modal-footer">
+                <form action="/account/myorder/updateOrder" method="post">
+                    <input type="hidden" id="orderId" name="orderId">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Confirm</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-</div>
+<!-- Order Cancel Confirmation Modal End -->
+    <!-- Imported Footer -->
     <%- include('../../partials/user/userFooter') %>
+    <!-- Repay Controles -->
     <script src="../../user/javascripts/payAgain.js"></script>
+    <!-- Repay Connected with Checkout Payment -->
     <script src="../../user/javascripts/checkoutPayment.js"></script>
+    <!-- Razorpay File -->
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    
+    <!-- Category Menu Loading -->
     <script src="../../user/javascripts/homeMenuLoad.js"></script>
+    <!-- Cart Controles -->
     <script src="../../user/javascripts/cartControl.js"></script>
     <!-- Js Plugins -->
     <script src="../../user/js/jquery-3.3.1.min.js"></script>
@@ -142,11 +149,5 @@ aria-labelledby="orderCancelModalTitle" aria-hidden="true">
     <script src="../../user/js/mixitup.min.js"></script>
     <script src="../../user/js/owl.carousel.min.js"></script>
     <script src="../../user/js/main.js"></script>
-
-
-
 </body>
-
-
-<!-- Mirrored from technext.github.io/ogani/shop-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:35 GMT -->
 </html>

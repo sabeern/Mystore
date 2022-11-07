@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>MyStore | Coupon List</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
+    <!-- Css File Included -->
+    <%- include('../../partials/admin/adminCss') %>
+</head>
+<body class="crm_body_bg">
+    <!-- Navbar Included -->
+    <%- include('../../partials/admin/adminNavbar') %>
+    <section class="main_content dashboard_part large_header_bg">
+        <!-- Header Included -->
+        <%- include('../../partials/admin/adminHeader') %>
+        <!-- Content Section Begin -->
+        <div class="main_content_iner ">
+            <div class="container-fluid p-0">
+                <div class="row justify-content-center">
+                    <div class="col-lg-12">
+                        <div class="white_card card_height_100 mb_30">
+                            <div class="white_card_body">
+                                <div class="QA_section">
+                                    <div class="white_box_tittle list_header">
+                                        <h3>Coupon List</h3>
+                                        <div class="box_right d-flex lms_block">
+                                            <div class="serach_field_2">
+                                            </div>
+                                            <div class="add_button ms-2">
+                                                <a href="/admin/coupon" data-bs-toggle="modal"
+                                                    data-bs-target="#addcategory" class="btn_1">Add New</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="QA_table mb_30">
+                                        <!-- table-responsive -->
+                                        <div id="categoryTable">
+                                            <table class="table lms_table_active">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Sl.No</th>
+                                                        <th scope="col">Category Code</th>
+                                                        <th scope="col">Min Purchase Amount</th>
+                                                        <th scope="col">Discount Percentage</th>
+                                                        <th scope="col">Max Discount</th>
+                                                        <th scope="col">Expiry Date</th>
+                                                        <th scope="col">Delete</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <% if(coupons.length > 0) {
+                                                        count = 1
+                                                        coupons.forEach((coupon)=> { %>
+                                                            <tr>
+                                                                <td><%= count++ %></td>
+                                                                <td><%=coupon.couponCode%></td>
+                                                                <td><%=coupon.minPurchaseAmount%></td>
+                                                                <td><%=coupon.couponPercentage%>%</td>
+                                                                <td><%=coupon.maxDiscountAmount%></td>
+                                                                <% expiryDate = coupon.expiryDate
+                                                                %>
+                                                                <td>
+                                                                    <%if(expiryDate < new Date()) { %>
+                                                                        Expired
+                                                                        <% } else { 
+                                                                            expiryDate = new Date(expiryDate);
+                                                                            newDate = (expiryDate.getDate()-1)+'/'+(+expiryDate.getMonth()+1)+'/'+expiryDate.getFullYear()  
+                                                                            %>
+                                                                            <%=newDate%>
+                                                                    <% } %>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#" onclick="changeId('<%= coupon._id %>')" data-toggle="modal" data-target="#deleteConfirmModal" class="question_content">
+                                                                        <span class="badge rounded-pill bg-danger">Delete</span>
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                       <% })} %>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Content Section End -->
+        <!-- Delete Confirmation Modal -->
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
+            aria-labelledby="deleteConfirmModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteConfirmModalTitle">Please Confirm</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure want to delete
+                    </div>
+                    <div class="modal-footer">
+
+                        <input type="hidden" id="couponId" name="couponId">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" id="confirmButton">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Delete Confirmation Modal End -->
+        <!-- Footer Included -->
+        <%- include('../../partials/admin/adminFooter') %>
+    </section>
+    <!-- Included Js Files -->
+    <%- include('../../partials/admin/adminJs') %>
+    <!-- Delete Coupon -->
+    <script src="../../../admin/javascript/deleteCoupon.js"></script>
+    <script src="../../../admin/javascript/metisMenu.js"></script>
+</body>
+</html>

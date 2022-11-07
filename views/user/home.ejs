@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><%=title%></title>
-    
+    <link rel="icon" type="image/x-icon" href="../admin/images/logo.png">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap"
         rel="stylesheet">
@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    <!-- Imported Header Contents -->
     <%- include('../partials/user/userNavbar') %>
     <!-- Hero Section Begin -->
     <section class="hero hero-normal">
@@ -70,7 +71,7 @@
                         </a>
                         <!--/.Controls-->
                     </div>
-                    <!--/.Carousel Wrapper-->
+                    <!-- Carousel Wrapper End-->
                 </div>
             </div>
         </div>
@@ -180,12 +181,12 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
-                        <h4>Top Rated Products</h4>
+                        <h4>Fresh Fish</h4>
                         <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
                                 <% 
                                 count = 0
-                                latestProduct.forEach((latest)=>{ %>
+                                meatFish.forEach((latest)=>{ %>
                                 <a href="/product/<%=latest._id%>" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="../uploads/<%=latest.productImage%>" alt="">
@@ -206,12 +207,12 @@
                 </div>
                 <div class="col-lg-4 col-md-6">
                     <div class="latest-product__text">
-                        <h4>Review Products</h4>
+                        <h4>Fruit & Vegetable</h4>
                         <div class="latest-product__slider owl-carousel">
                             <div class="latest-prdouct__slider__item">
                                 <% 
                                 count = 0
-                                latestProduct.forEach((latest)=>{ %>
+                                fruitVeg.forEach((latest)=>{ %>
                                 <a href="/product/<%=latest._id%>" class="latest-product__item">
                                     <div class="latest-product__item__pic">
                                         <img src="../uploads/<%=latest.productImage%>" alt="">
@@ -300,9 +301,12 @@
         </div>
     </section>
     <!-- Blog Section End -->
+    <!-- Imported Footer-->
 <%- include('../partials/user/userFooter') %>
+    <!-- Login/signup and Category Menu Loading -->
     <script src="../user/javascripts/loginSignup.js"></script>
     <script src="../user/javascripts/homeMenuLoad.js"></script>
+    <!-- Cart and Wishlist Controles -->
     <script src="../user/javascripts/addToCart.js"></script>
     <script src="../user/javascripts/addToWishlist.js"></script>
     <!-- Js Plugins -->

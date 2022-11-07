@@ -3,76 +3,19 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <title>Sales</title>
+    <title>MyStore | Edit Product</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
 <!--CSS File Included-->
     <%- include('../../partials/admin/adminCss') %>
 </head>
 <body class="crm_body_bg">
-    <!-- Navbar  -->
+    <!-- Navbar Included -->
     <%- include('../../partials/admin/adminNavbar') %>
+    <!-- Main Section -->
        <section class="main_content dashboard_part large_header_bg">
-            <div class="container-fluid g-0">
-                <div class="row">
-                    <div class="col-lg-12 p-0">
-                        <div class="header_iner d-flex justify-content-between align-items-center">
-                            <div class="sidebar_icon d-lg-none">
-                                <i class="ti-menu"></i>
-                            </div>
-                            <div class="serach_field-area d-flex align-items-center">
-                                <div class="search_inner">
-                                    <form action="#">
-                                        <div class="search_field">
-                                            <input type="text" placeholder="Search here...">
-                                        </div>
-                                        <button type="submit"> 
-                                            <img src="../../../admin/images/icon/icon_search.svg" alt="">
-                                        </button>
-                                    </form>
-                                </div>
-                                <span class="f_s_14 f_w_400 ml_25 white_text text_white">Apps</span>
-                            </div>
-                            <div class="header_right d-flex justify-content-between align-items-center">
-                                <div class="header_notification_warp d-flex align-items-center">
-                                    <li>
-                                        <a class="bell_notification_clicker nav-link-notify" href="#"> <img
-                                                src="../../../admin/images/icon/bell.svg" alt="">
-                                        </a>
-                                        <div class="Menu_NOtification_Wrap">
-                                            <div class="notification_Header">
-                                                <h4>Notifications</h4>
-                                            </div>
-                                            <div class="Notification_body">
-                                            </div>
-                                            <div class="nofity_footer">
-                                                <div class="submit_button text-center pt_20">
-                                                    <a href="#" class="btn_1">See More</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <a class="CHATBOX_open nav-link-notify" href="#"> <img
-                                                src="../../admin/images/icon/msg.svg" alt=""> </a>
-                                    </li>
-                                </div>
-                                <div class="profile_info">
-                                    <img src="../../../admin/images/client_img.png" alt="#">
-                                    <div class="profile_info_iner">
-                                        <div class="profile_author_name">
-                                            <h5>Admin</h5>
-                                        </div>
-                                        <div class="profile_info_details">
-                                            <a href="#">My Profile </a>
-                                            <a href="/admin/logout">Log Out </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Body Content  -->
+             <!-- Header Included -->
+        <%- include('../../partials/admin/adminHeader') %>
+        <!-- Content Section Begin  -->
             <div class="main_content_iner ">
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
@@ -86,7 +29,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="dashboard_breadcam text-end">
-                                            <p><a href="index-2.html">Dashboard</a> <i class="fas fa-caret-right"></i>Add
+                                            <p><a href="/admin/dashboard">Dashboard</a> <i class="fas fa-caret-right"></i>Add
                                                 Product</p>
                                         </div>
                                     </div>
@@ -194,7 +137,8 @@
                     </div>
                 </div>
             </div>
-            <!-- footer part -->
+            <!-- Content Section End -->
+            <!-- Footer Begin -->
             <div class="footer_part">
                 <div class="container-fluid">
                     <div class="row">
@@ -207,10 +151,12 @@
                     </div>
                 </div>
             </div>
+            <!-- Footer End -->
         </section>
-        <!-- validation and sub-category load-->
+        <!-- Main Section End -->
+        <!-- Form Validation and Subcategory Load -->
         <script src="../../../admin/javascript/adminProduct.js"></script>
-        <!-- footer  -->
+        <!-- Footer Included  -->
         <%- include('../../partials/admin/adminJs') %>
 </body>
 </html>

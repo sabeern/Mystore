@@ -4,15 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>MyStore | Sales Report</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
     <!-- Css File Included -->
     <%- include('../partials/admin/adminCss') %>
 </head>
 <body class="crm_body_bg">
-    <!-- Navbar -->
+    <!-- Navbar Included -->
     <%- include('../partials/admin/adminNavbar') %>
     <section class="main_content dashboard_part large_header_bg">
+        <!-- Header Included -->
         <%- include('../partials/admin/adminHeader') %>
-        <!-- Body Content  -->
+        <!-- Content Section Begin  -->
         <div class="main_content_iner ">
             <div class="container-fluid p-0">
                 <div class="row justify-content-center">
@@ -35,6 +37,7 @@
                                                  <span class="text-danger" id="categoryErr"></span></label>
                                                 <select id="reportType" name="reportType" class="form-control">
                                                     <option value="">Choose report type...</option>
+                                                    <option value="category">Category Wise</option>
                                                     <option value="month">Monthly</option>
                                                     <option value="customer">Customer Wise</option>
                                                 </select>
@@ -68,15 +71,18 @@
                 </div>
             </div>
         </div>
-        <!-- footer part -->
+        <!-- Content Section End-->
+        <!-- footer Included -->
         <%- include('../partials/admin/adminFooter') %>
     </section>
     <!-- Included Js Files -->
     <%- include('../partials/admin/adminJs') %>
+    <!-- Js Liberary For Exporting Reports -->
     <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.22/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script src="../../admin/javascript/metisMenu.js"></script>
+    <!-- Export to pdf/excel -->
     <script src="../../admin/javascript/salesReportAndExport.js"></script>
 </body>
 </html>

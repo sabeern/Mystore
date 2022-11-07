@@ -27,6 +27,9 @@ function findResult(pageName) {
         minAmount = minAmount.replace('₹','');
     let maxAmount = document.getElementById('maxamount').value;
         maxAmount = maxAmount.replace('₹','');
+        if(!minAmount) {
+            return false;
+        }
     let result = '',page = '',count = 0;
     let searchContent = document.getElementById('searchContent').value;
     fetch('/category/sortData', {

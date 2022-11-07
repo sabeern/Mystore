@@ -184,7 +184,7 @@ const viewUserOrder = async (req,res) => {
             return;
         }
         orderList = await orderModel.aggregate([{$match:{_id:orderId,delFlag:0}},{$unwind:'$orderItems'},
-                            {$project:{orderId:'$orderId',totalAmount:'$totalAmount',deliveryCharge:'$deliveryCharge',address:'$deliveryAddress',item:'$orderItems.productId',itemQuantity:'$orderItems.productQuantity',itemPrice:'$orderItems.productPrice'}},
+                            {$project:{orderId:'$orderId',totalAmount:'$totalAmount',deliveryCharge:'$deliveryCharge',discount:'$discount',address:'$deliveryAddress',item:'$orderItems.productId',itemQuantity:'$orderItems.productQuantity',itemPrice:'$orderItems.productPrice'}},
                             {$lookup:{from:process.env.PRODUCT_COLLECTION,localField:'item',foreignField:'_id',as:'product'}}]);
             if(orderList.length < 1) {
                 res.redirect('/');

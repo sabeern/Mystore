@@ -38,6 +38,11 @@ const productSchema = mongoose.Schema({
     },
     offerType: String,
     offerValue: Number,
+    addedDate:{
+        type:Date,
+        required:true,
+        default:new Date()
+    },
     delFlag:{
         type:Number,
         required:true

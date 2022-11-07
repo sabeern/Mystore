@@ -60,6 +60,7 @@ const adminProductRoutes = require('./routes/admin/product');
 const adminUserRoutes = require('./routes/admin/user');
 const adminOrderRoutes = require('./routes/admin/order');
 const bannerRoutes = require('./routes/admin/banner');
+const couponRoutes = require('./routes/admin/coupon');
 
 //user routes
 app.use(homeRouter);
@@ -79,7 +80,8 @@ app.use('/admin/product',adminProductRoutes);
 app.use('/admin/user',adminUserRoutes);
 app.use('/admin/order',adminOrderRoutes);
 app.use('/admin/banner',bannerRoutes);
-app.use((req, res) => {
+app.use('/admin/coupon',couponRoutes);
+/*app.use((req, res) => {
   res.redirect('/');
-});
+});*/
 app.listen(process.env.LISTEN_PORT || 3000);

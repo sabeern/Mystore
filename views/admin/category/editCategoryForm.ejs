@@ -4,15 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>MyStore | Edit Category</title>
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
 <!-- Included CSS Files-->
     <%- include('../../partials/admin/adminCss') %>
 </head>
 <body class="crm_body_bg">
-    <!-- Navbar  -->
+    <!-- Navbar Included -->
     <%- include('../../partials/admin/adminNavbar') %>
     <section class="main_content dashboard_part large_header_bg">
+        <!-- Header Included -->
         <%- include('../../partials/admin/adminHeader') %>
-        <!-- Body Content  -->
+        <!-- Content Section Begin  -->
         <div class="main_content_iner ">
             <div class="container-fluid p-0">
                 <div class="row justify-content-center">
@@ -26,7 +28,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="dashboard_breadcam text-end">
-                                        <p><a href="index-2.html">Dashboard</a> <i class="fas fa-caret-right"></i>Edit
+                                        <p><a href="/admin/dashboard">Dashboard</a> <i class="fas fa-caret-right"></i>Edit
                                             Category</p>
                                     </div>
                                 </div>
@@ -40,8 +42,9 @@
                                 <div class="col-lg-6">
                                     <div class="modal-content cs_modal">
                                         <div class="modal-body">
-                                            <form method="post" action="/admin/category/updateCategory/<%= result._id %>?_method=PUT">
+                                            <form method="post" action="/admin/category/updateCategory/<%= result._id %>?_method=PUT" onsubmit="return validateCategory()">
                                                 <div class="">
+                                                    <span id="categoryErr" class="text-danger"></span>
                                                     <input type="text" name="categoryName" id="categoryName" onkeyup="checkCategory()" class="form-control"
                                                         placeholder="Category Name" value="<%= result.categoryName %>" required>
                                                 </div>
@@ -56,11 +59,14 @@
                 </div>
             </div>
         </div>
-        <!-- footer part -->
+        <!-- Content Section End -->
+        <!-- Footer Included -->
         <%- include('../../partials/admin/adminFooter') %>
     </section>
-    <!-- Checking Already Exist -->
+    <!-- Checking Already Exist Category -->
     <script src="../../../admin/javascript/existCheck.js"></script>
+    <!-- Category Form Validating -->
+    <script src="../../../admin/javascript/formValidations.js"></script>
     <!-- Js Files Included -->
     <%- include('../../partials/admin/adminJs') %>
 </body>

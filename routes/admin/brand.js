@@ -4,6 +4,10 @@ const brandController = require('../../controllers/admin/brandController');
 const sessionCheck = require('../../config/adminSessionCheck');
 
 router.get('/', sessionCheck.authCheckAfter, brandController.brand);
-router.post('/addBrand', brandController.addBrand);
+router.post('/addBrand', sessionCheck.authCheckAfter, brandController.addBrand);
+router.get('/brandList', sessionCheck.authCheckAfter, brandController.brandList);
+router.post('/editBrand', sessionCheck.authCheckAfter, brandController.brandEdit);
+router.post('/updateBrand', sessionCheck.authCheckAfter, brandController.updateBrand);
+router.delete('/deleteBrand', sessionCheck.authCheckAfter, brandController.deleteBrand);
 
 module.exports = router;

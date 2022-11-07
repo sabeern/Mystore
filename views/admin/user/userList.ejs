@@ -4,15 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>MyStore | Customer List</title>
-    <!-- Css File Included -->
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
+    <!-- CSS File Included -->
     <%- include('../../partials/admin/adminCss') %>
 </head>
 <body class="crm_body_bg">
-    <!-- Navbar -->
+    <!-- Navbar Included -->
     <%- include('../../partials/admin/adminNavbar') %>
     <section class="main_content dashboard_part large_header_bg">
+        <!-- Header Included -->
         <%- include('../../partials/admin/adminHeader') %>
-        <!-- Body Content  -->
+        <!-- Content Section Begin  -->
         <div class="main_content_iner ">
             <div class="container-fluid p-0">
                 <div class="row justify-content-center">
@@ -26,7 +28,7 @@
                                             <div class="serach_field_2">
                                                 <div class="search_inner">
                                                     <div class="search_field">
-                                                        <input type="text" id="searchContent" name="searchContent" onkeyup="searchCategory()"
+                                                        <input type="text" id="searchUserContent" name="searchUserContent" onkeyup="searchUser()"
                                                             placeholder="Search content here...">
                                                     </div>
                                                     <button type="submit"> <i class="ti-search"></i> </button>
@@ -36,7 +38,7 @@
                                     </div>
                                     <div class="QA_table mb_30">
                                         <!-- table-responsive -->
-                                        <div id="categoryTable">
+                                        <div id="userTable">
                                             <table class="table lms_table_active">
                                                 <thead>
                                                     <tr>
@@ -93,6 +95,7 @@
                 </div>
             </div>
         </div>
+        <!-- Content Section End -->
         <!-- View Details Modal -->
         <div class="modal fade" id="userViewModal" tabindex="-1" role="dialog"
             aria-labelledby="viewModalTitle" aria-hidden="true">
@@ -115,6 +118,7 @@
                 </div>
             </div>
         </div>
+        <!-- View Details Modal End -->
         <!--Block confirm modal-->
         <div class="modal fade" id="blockConfirmModal" tabindex="-1" role="dialog"
             aria-labelledby="blockConfirmModalTitle" aria-hidden="true">
@@ -140,56 +144,14 @@
                 </div>
             </div>
         </div>
-        <!-- footer part -->
+        <!-- Block Confirmation Modal End -->
+        <!-- Footer Included -->
         <%- include('../../partials/admin/adminFooter') %>
     </section>
     <!-- Included Js Files -->
     <%- include('../../partials/admin/adminJs') %>
+    <!-- Block & View & Search User-->
+    <script src="../../../admin/javascript/userProfile.js"></script>
     <script src="../../../admin/javascript/metisMenu.js"></script>
-    <script>
-        function showDetails(userId) {
-            let details = `<table class="table table-bordered"><tbody>`;            
-            fetch('/admin/user/viewDetails', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userId })
-            }).then(res => res.json()).then(data => {
-                const user = data.user;
-                details += `<tr><th>Fullname</th><td>${user.userName}</td></tr>
-                            <tr><th>User Email</th><td>${user.userEmail}</td></tr>
-                            <tr><th>User Mobile</th><td>${user.userMobile}</td></tr>
-                            <tr><th>User Status</th><td>${user.userStatus}</td></tr>
-                            <tr><th>User Type</th><td>${user.userType}</td></tr>`;
-                            if(user.userAddress.length > 0) {
-                                for(i=0;i<user.userAddress.length;i++) {
-                                    if(i==0) {
-                                        details += `<tr><th>User Addresses</th>
-                                        <td>${user.userAddress[i].fullName} - ${user.userAddress[i].mobileNumber}<br/>
-                                            ${user.userAddress[i].locality}, ${user.userAddress[i].address}, ${user.userAddress[i].pincode}<br/>
-                                            ${user.userAddress[i].district}, ${user.userAddress[i].state}</td></tr>`;
-                                    }else {
-                                        details += `<tr><th></th>
-                                            <td>${user.userAddress[i].fullName} - ${user.userAddress[i].mobileNumber}<br/>
-                                            ${user.userAddress[i].locality}, ${user.userAddress[i].address}, ${user.userAddress[i].pincode}<br/>
-                                            ${user.userAddress[i].district}, ${user.userAddress[i].state}</td></tr>`
-                                    }  
-                                }
-                            }
-                details += `</tbody></table>`;
-                document.getElementById('userDetails').innerHTML = details;
-             })
-        }
-    function blockConfirm(userId,userStatus,userName) {
-        document.getElementById('userId').value = userId;
-        document.getElementById('userStatus').value = userStatus;
-        let blockStatus;
-        if(userStatus == 'active') {
-            blockStatus = 'block';
-        }else {
-            blockStatus = 'unblock';
-        }
-        document.getElementById('blockDetails').innerHTML = blockStatus+' '+userName;
-    }
-    </script>
 </body>
 </html>

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MyStore | Department</title>
-
+    <link rel="icon" type="image/x-icon" href="../admin/images/logo.png">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
 
@@ -23,6 +23,7 @@
 </head>
 
 <body>
+    <!--Imported Header Content-->
    <%- include('../partials/user/userNavbar') %>
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="../user/img/breadcrumb.jpg">
@@ -53,7 +54,7 @@
                             <div class="price-range-wrap">
                                 <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
                                     data-min="<%if(minMaxAmount.length>0){%><%=minMaxAmount[0].minValue%><%}%>" 
-                                    data-max="<%if(minMaxAmount.length>0){%><%=minMaxAmount[0].maxValue%><%}%>" onclick="findResult('categoryPage')">
+                                    data-max="<%if(minMaxAmount.length>0){%><%=minMaxAmount[0].maxValue%><%}%>" onclick="findResult('categoryPage')" onmouseover="findResult('categoryPage')">
                                     <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
                                     <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
                                     <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
@@ -164,11 +165,15 @@
             </div>
         </div>
     </section>
-    <script src="../user/javascripts/paginationAndSorting.js"></script>
     <!-- Product Section End -->
+    <!-- Imported Footer-->
     <%- include('../partials/user/userFooter') %>
+    <!-- Pagination and Product Filtering-->
+    <script src="../user/javascripts/paginationAndSorting.js"></script>
+    <!-- Login/signup and Category Menu Loading -->
     <script src="../user/javascripts/loginSignup.js"></script>
     <script src="../user/javascripts/homeMenuLoad.js"></script>
+    <!-- Cart and Wishlist Controles -->
     <script src="../user/javascripts/addToCart.js"></script>
     <script src="../user/javascripts/addToWishlist.js"></script>
     <!-- Js Plugins -->
@@ -180,11 +185,5 @@
     <script src="../user/js/mixitup.min.js"></script>.
     <script src="../user/js/owl.carousel.min.js"></script>.
     <script src="../user/js/main.js"></script>
-
-
-
 </body>
-
-
-<!-- Mirrored from technext.github.io/ogani/shop-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:35 GMT -->
 </html>

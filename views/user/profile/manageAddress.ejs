@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MyStore | Manage Address</title>
-
+    <link rel="icon" type="image/x-icon" href="../../admin/images/logo.png">
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&amp;display=swap" rel="stylesheet">
 
@@ -23,7 +23,9 @@
 </head>
 
 <body>
+    <!--Imported Header Content-->
     <%- include('../../partials/user/userNavbar') %>
+    <!-- Content Section -->
     <section class="product spad">
         <div class="container">
             <div class="row">
@@ -123,85 +125,14 @@
             </div>
         </div>
     </section>
-    <!-- Product Section End -->
+    <!-- Content Section End -->
+    <!-- Imported Footer -->
     <%- include('../../partials/user/userFooter') %>
-    <script>
-        const formElemnt = document.getElementById('addAddress');
-        function showAddressForm(status) {
-            if(status == 1) {
-                formElemnt.style.display = 'block';
-            }else {
-                formElemnt.style.display = 'none';
-            }
-        }
-    function validateAddress() {
-        let errFlag = 0;
-        let fullName = document.getElementById('fullName').value;
-            fullName = fullName.trim();
-        if(fullName.length < 1) {
-            errFlag = 1;
-            document.getElementById('nameErr').innerHTML = '*required';
-        }else {
-            document.getElementById('nameErr').innerHTML = '';
-        }
-        let mobile = document.getElementById('mobile').value;
-            mobile = mobile.trim();
-        if(mobile.length < 1) {
-            errFlag = 1;
-            document.getElementById('mobileErr').innerHTML = '*required';
-        }else if(!mobile.match(/^\d{10}$/)){
-            document.getElementById('mobileErr').innerHTML = '* valied number required';
-        }else {
-            document.getElementById('mobileErr').innerHTML = '';
-        }
-        let pincode = document.getElementById('pincode').value;
-            pincode = pincode.trim();
-        if(pincode.length < 1) {
-            errFlag = 1;
-            document.getElementById('pinErr').innerHTML = '*required';
-        }else if(!pincode.match(/[0-9]/g)) {
-            document.getElementById('pinErr').innerHTML = '*required valid pincode';
-        }else {
-            document.getElementById('pinErr').innerHTML = '';
-        }
-        let locality = document.getElementById('locality').value;
-            locality = locality.trim();
-        if(locality.length < 1) {
-            errFlag = 1;
-            document.getElementById('localityErr').innerHTML = '*required';
-        }else {
-            document.getElementById('localityErr').innerHTML = '';
-        }
-        let address = document.getElementById('address').value;
-            address = address.trim();
-        if(address.length < 1) {
-            errFlag = 1;
-            document.getElementById('addressErr').innerHTML = '*required';
-        }else {
-            document.getElementById('addressErr').innerHTML = '';
-        }
-        let district = document.getElementById('district').value;
-            district = district.trim();
-        if(district.length < 1) {
-            errFlag = 1;
-            document.getElementById('districtErr').innerHTML = '*required';
-        }else {
-            document.getElementById('districtErr').innerHTML = '';
-        }
-        let state = document.getElementById('state').value;
-            state = state.trim();
-        if(state.length < 1) {
-            errFlag = 1;
-            document.getElementById('stateErr').innerHTML = '*required';
-        }else {
-            document.getElementById('stateErr').innerHTML = '';
-        }
-        if(errFlag == 1) {
-            return false;
-        }
-    }
-    </script>
+    <!-- Address Managing and Validation-->
+    <script src="../../user/javascripts/manageAddress.js"></script>
+    <!-- Category Menu Loading -->
     <script src="../../user/javascripts/homeMenuLoad.js"></script>
+    <!-- Cart Controles -->
     <script src="../../user/javascripts/cartControl.js"></script>
     <!-- Js Plugins -->
     <script src="../../user/js/jquery-3.3.1.min.js"></script>
@@ -212,11 +143,5 @@
     <script src="../../user/js/mixitup.min.js"></script>
     <script src="../../user/js/owl.carousel.min.js"></script>
     <script src="../../user/js/main.js"></script>
-
-
-
 </body>
-
-
-<!-- Mirrored from technext.github.io/ogani/shop-grid.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 22 Sep 2022 09:01:35 GMT -->
 </html>
