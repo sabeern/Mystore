@@ -59,7 +59,7 @@ const loadSubcategory = async (req,res) => {
 }
 const productList = async (req,res) => {
     let allProducts = await productModel.aggregate([{$match:{delFlag:0}},{$lookup:{from:process.env.CATEGORY_COLLECTION,localField:'productCategoryId',
-    foreignField:'_id',as:'category'}},{$lookup:{from:process.env.SUBcATEGORY_COLLECTION,localField:'productSubCategoryId',foreignField:'_id',as:'subCategory'}}]);
+    foreignField:'_id',as:'category'}},{$lookup:{from:process.env.SUBCATEGORY_COLLECTION,localField:'productSubCategoryId',foreignField:'_id',as:'subCategory'}}]);
     res.render('./admin/product/productList',{allProducts});
 }
 const deleteProduct = async (req,res) => {

@@ -29,7 +29,6 @@ const subCategory = async (req, res) => {
 const addSubCategory = (req, res) => {
     uploadSingleImage(req, res, async err => {
         if (err) {
-            console.log(err);
             req.flash('message', 'Image File not Supported');
             res.redirect('/admin/subCategory');
             return;
