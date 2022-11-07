@@ -2,7 +2,7 @@ function passwordMatch() {
     const newPasswored = document.getElementById('newPassword').value;
     const confirmPasswored = document.getElementById('confirmPassword').value;
     const msgId = document.getElementById('matchResult');
-    const submitBtn = document.getElementById('submitButton');
+    const submitBtn = document.getElementById('updateButton');
     if(newPasswored.length > 0 & confirmPasswored.length > 0) {
         if(newPasswored == confirmPasswored) {
             msgId.innerHTML = `&nbsp;<span class="text-success">Password matching</span>`;
