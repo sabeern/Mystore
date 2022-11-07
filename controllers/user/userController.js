@@ -16,7 +16,7 @@ const userExistCheck = async (req,res) => {
           });
           const mailOptions = {
             from: process.env.MAIL_SENDER,
-            to: 'nsabeer007@gmail.com',
+            to: userEmail,
             subject: 'Mystore email verification',
             html: `<p>use this code for Mystore email verification <b>${Otp}</b></p>`
           };
