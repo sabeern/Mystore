@@ -45,9 +45,11 @@ headers: { 'Content-Type': 'application/json' },
 body: JSON.stringify({ productId,productQuantity })
 }).then(res => res.json()).then(data => {
     if(data.msg) {
-        alert(data.msg);
+        document.getElementById('itemAddMessage').innerHTML=`<div class="alert alert-danger text-center" role="alert" style="display:block;position:fixed;width:100%;z-index: 100;">
+        <b>${data.msg}</b></div>`;
+        setTimeout(hideMessage,3000);
     }
-    if(type == 'buy') {
+    if(type == 'buy' & data.msg !='please login to continue') {
         window.location = '/gp/cart';
     }
     if(data.cartCount.length > 0) {

@@ -57,7 +57,9 @@ function incQuantity(productId) {
     body: JSON.stringify({ productId })
 }).then(res => res.json()).then(data => {
     if(data.msg) {
-        alert(data.msg);
+        document.getElementById('itemAddMessage').innerHTML=`<div class="alert alert-danger text-center" role="alert" style="display:block;position:fixed;width:100%;z-index: 100;">
+        <b>${data.msg}</b></div>`;
+        setTimeout(hideMessage,3000);
     }
 });
 }

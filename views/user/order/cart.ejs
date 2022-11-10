@@ -112,24 +112,24 @@
                 <div class="col-lg-6">
                 </div>
                 <div class="col-lg-6">
+                    <% if(cartList.length > 0) { %>
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
                             <li>Subtotal <span id="subTotal">₹<%= (grandTotal).toFixed(2) %></span></li>
                             <li style="text-decoration:none;font-weight:200;">Delivery Charge 
-                                <span id='deliveryPrice'><% if(grandTotal <=99){ deliveryCharge = 50 %><span>₹50.00</span> <% } else { deliveryCharge = 0 %>
+                                <span id='deliveryPrice'><% if(grandTotal <=99 & grandTotal > 0){ deliveryCharge = 50 %><span>₹50.00</span> <% } else { deliveryCharge = 0 %>
                                     <span class="text-success"><b>Free</b></span> <% } %></span>
                             </li>
                             <li>Total <span id="total">₹<%= (grandTotal+deliveryCharge).toFixed(2) %></span></li>
                         </ul>
                         <form action="/gp/checkout" method="post">
-                            <% if(cartList.length > 0) { %>
                             <input type="hidden" id="cartId" name="cartId" value="<%=cartList[0]._id%>">
                             <input type="hidden" id="deliveryCharge" name="deliveryCharge" value="<%=deliveryCharge%>">
                             <button type="submit" class="primary-btn">PROCEED TO CHECKOUT</button>
-                            <% } %>
                         </form>
                     </div>
+                    <% } %>
                 </div>
             </div>
         </div>
